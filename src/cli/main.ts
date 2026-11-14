@@ -12,7 +12,7 @@ import {
 import { withGatewayTransport } from "~/server/services/gateway-transport";
 import { connectorCreated } from "~/server/services/local-connector.schema";
 import { discoverModels } from "~/server/services/model-discovery";
-import { listingUpdateInput } from "~/server/services/token2api.schema";
+import { listingUpdateInput } from "~/server/services/vane.schema";
 import { connectorTokenSchema } from "~/shared/connector";
 import { type GatewayProxy, proxyInput } from "~/shared/gateway-config";
 import { version } from "../../packages/connector/package.json";
@@ -157,7 +157,7 @@ export async function runCli(
 			version,
 			commands,
 			privacyRules,
-			next: "token2api schema --pretty",
+			next: "vane schema --pretty",
 		};
 	if (command === "schema") return schemaDocument();
 	if (!commands.some((entry) => entry.command === command))
@@ -353,7 +353,7 @@ export async function runCli(
 			address: signed.viewer.address,
 			expiresAt: new Date(signed.session.expiresAt).toISOString(),
 			privateKeyPersistedByThisLogin: false,
-			next: "token2api resource list",
+			next: "vane resource list",
 		};
 	}
 	if (command === "connector start") {
@@ -608,14 +608,7 @@ export async function runCli(
 			transport: "local",
 			online: false,
 			credentialSaved: true,
-			next: [
-				"token2api",
-				"connector",
-				"start",
-				"--id",
-				created.id,
-				"--interactive",
-			],
+			next: ["vane", "connector", "start", "--id", created.id, "--interactive"],
 		};
 	}
 	if (command === "connector configure") {

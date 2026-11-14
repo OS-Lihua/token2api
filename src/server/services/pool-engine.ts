@@ -79,7 +79,7 @@ async function runDemo(
 	signal?: AbortSignal,
 ): Promise<EngineResult> {
 	const answer =
-		"[SIMULATED DEMO · 模拟响应] Token2API routes requests to provider resources, records usage, and prepares on-chain settlement. No AI model was called.";
+		"[SIMULATED DEMO · 模拟响应] Vane routes requests to provider resources, records usage, and prepares on-chain settlement. No AI model was called.";
 	const units = Array.from(answer).slice(0, input.maxTokens);
 	let text = "";
 	for (let i = 0; i < units.length; i += 12) {

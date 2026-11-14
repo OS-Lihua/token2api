@@ -11,8 +11,8 @@ import {
 	modelListResponseSchema,
 	streamChunkResponseSchema,
 	usageResponseSchema,
-} from "~/server/services/token2api.contract";
-import { publicChatInput } from "~/server/services/token2api.schema";
+} from "~/server/services/vane.contract";
+import { publicChatInput } from "~/server/services/vane.schema";
 import { registerCommerce } from "./commerce";
 import { registerLocalConnector } from "./local-connector";
 
@@ -20,7 +20,7 @@ const registry = new OpenAPIRegistry();
 registry.registerComponent("securitySchemes", "bearerAuth", {
 	type: "http",
 	scheme: "bearer",
-	bearerFormat: "Token2API API Key",
+	bearerFormat: "Vane API Key",
 });
 const chatInput = registry.register("ChatInput", publicChatInput);
 registry.register("Usage", usageResponseSchema);
@@ -105,7 +105,7 @@ export const openApiDocument = new OpenApiGeneratorV31(
 ).generateDocument({
 	openapi: "3.1.0",
 	info: {
-		title: "Token2API API",
+		title: "Vane API",
 		version: "0.2.0",
 		description:
 			"Merchant and consumer management over wallet sessions; text inference over scoped API keys. Management endpoints use /api/v1 only. /v1 is an inference alias. Off-chain metering and prepaid on-chain settlement. Settlement deployments support Ethereum, Base, Arbitrum, Optimism, BSC, Polygon, Avalanche and Robinhood Chain with native assets or explicitly configured USDT/USDC. Each instance fixes one chain and asset. Billing uses integer micro-units; chain transfers use network.tokenDecimals. Local tests use loopback chain 31337.",

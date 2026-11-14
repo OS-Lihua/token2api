@@ -5,7 +5,7 @@ import { type FormEvent, useState } from "react";
 import type { PrepaidAccountView } from "~/shared/model-routing";
 import { formatAmount, parseMicroAmount } from "~/shared/money";
 import { isNativeAsset } from "~/shared/settlement-asset";
-import type { NetworkInfo } from "~/shared/token2api";
+import type { NetworkInfo } from "~/shared/vane";
 import { Loading, Modal, Panel, QueryError } from "./ui";
 
 export type PrepaidAccountProps = {

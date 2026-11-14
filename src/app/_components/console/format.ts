@@ -1,4 +1,4 @@
-import type { ListingView, RequestView, SessionView } from "~/shared/token2api";
+import type { ListingView, RequestView, SessionView } from "~/shared/vane";
 
 export type Section =
 	| "overview"

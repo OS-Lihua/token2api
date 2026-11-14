@@ -8,7 +8,7 @@ import {
 import type { Config } from "wagmi";
 import { getAccount, getConnectorClient, switchChain } from "wagmi/actions";
 import { networkMetadata, settlementChain } from "~/shared/network";
-import type { NetworkInfo } from "~/shared/token2api";
+import type { NetworkInfo } from "~/shared/vane";
 
 export function defineWalletChain(network: NetworkInfo) {
 	if (network.mode === "local" && network.chainId !== 31337)

@@ -2,7 +2,7 @@
 
 import { ArrowUpRight, Power, Server, Wallet } from "lucide-react";
 import { formatAmount as usd } from "~/shared/money";
-import type { ListingView, SessionView, Snapshot } from "~/shared/token2api";
+import type { ListingView, SessionView, Snapshot } from "~/shared/vane";
 import {
 	listingKind,
 	remainingBudget,

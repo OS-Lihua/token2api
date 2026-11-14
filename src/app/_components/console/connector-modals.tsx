@@ -105,7 +105,7 @@ export function ConnectorSetupModal({
 		outputRate: number;
 	}) => void;
 }) {
-	const setup = api.token2api.connectorSetup.useQuery(
+	const setup = api.vane.connectorSetup.useQuery(
 		{ id: connection.id },
 		{ refetchInterval: 2000 },
 	);
@@ -269,7 +269,7 @@ export function ListingModal({
 	const [models, setModels] = useState<string[]>([]);
 	const [selectedModel, setSelectedModel] = useState("");
 	const [discoveryError, setDiscoveryError] = useState<string | null>(null);
-	const discovery = api.token2api.discoverModels.useMutation();
+	const discovery = api.vane.discoverModels.useMutation();
 	const generation = useRef(0);
 	const resetModels = () => {
 		generation.current++;

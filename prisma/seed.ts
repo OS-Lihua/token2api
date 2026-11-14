@@ -5,10 +5,7 @@ import { mnemonicToAccount } from "viem/accounts";
 const prisma = new PrismaClient();
 const mnemonic = "test test test test test test test test test test test junk";
 async function main() {
-	if (
-		process.env.ALLOW_DEMO !== "true" ||
-		process.env.TOKEN2API_MODE !== "local"
-	) {
+	if (process.env.ALLOW_DEMO !== "true" || process.env.VANE_MODE !== "local") {
 		console.log("Demo seed disabled.");
 		return;
 	}
@@ -16,7 +13,7 @@ async function main() {
 	for (let i = 0; i < names.length; i++) {
 		const name = names[i];
 		if (!name) continue;
-		const id = `ctoken2apidemo000000000000${i + 1}`;
+		const id = `cvanedemo000000000000${i + 1}`;
 		await prisma.listing.upsert({
 			where: { id },
 			update: {},
@@ -32,7 +29,7 @@ async function main() {
 						"小型资源池 · 按用量计费演示",
 						"社区供应者 · 完整结算演示",
 					][i] || "Demo resource",
-				model: "token2api-demo",
+				model: "vane-demo",
 				kind: "demo",
 				inputRate: [3000000, 2000000, 1500000][i] || 3000000,
 				outputRate: [15000000, 10000000, 8000000][i] || 15000000,

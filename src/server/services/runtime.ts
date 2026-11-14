@@ -15,15 +15,15 @@ import {
 export type { ChainConfig };
 export const runtimeDirectory = () =>
 	path.resolve(
-		/* turbopackIgnore: true */ process.env.TOKEN2API_DATA_DIR ||
-			(process.env.TOKEN2API_MODE === "local"
+		/* turbopackIgnore: true */ process.env.VANE_DATA_DIR ||
+			(process.env.VANE_MODE === "local"
 				? ".runtime"
 				: `.runtime/evm/${process.env.SETTLEMENT_CHAIN_ID || DEFAULT_NETWORK.chainId}-${(process.env.SETTLEMENT_ASSET || DEFAULT_NETWORK.asset).toLowerCase()}`),
 	);
 let configCache: { source: string; value: ChainConfig } | undefined;
 /** Parsed once per source. A rewritten chain.json is detected by its mtime. */
 export function chainConfig(): ChainConfig {
-	const mode = process.env.TOKEN2API_MODE || "evm";
+	const mode = process.env.VANE_MODE || "evm";
 	const inline = process.env.CHAIN_CONFIG_JSON;
 	const file = inline ? "" : path.join(runtimeDirectory(), "chain.json");
 	const source = `${mode}\n${inline || `${file}@${fs.statSync(file).mtimeMs}`}`;
@@ -32,9 +32,7 @@ export function chainConfig(): ChainConfig {
 		JSON.parse(inline || fs.readFileSync(file, "utf8")),
 	);
 	if (mode !== value.mode)
-		throw new Error(
-			"TOKEN2API_MODE does not match the active chain configuration.",
-		);
+		throw new Error("VANE_MODE does not match the active chain configuration.");
 	configCache = { source, value: validateChainConfig(value) };
 	return configCache.value;
 }
@@ -42,7 +40,7 @@ export function sessionPassword(): string {
 	if (process.env.SESSION_PASSWORD && process.env.SESSION_PASSWORD.length >= 32)
 		return process.env.SESSION_PASSWORD;
 	if (
-		process.env.TOKEN2API_MODE !== "local" ||
+		process.env.VANE_MODE !== "local" ||
 		process.env.NODE_ENV === "production"
 	)
 		throw new Error("Set SESSION_PASSWORD to at least 32 random characters.");
@@ -57,7 +55,7 @@ export function sessionPassword(): string {
 }
 export const demoEnabled = () =>
 	process.env.ALLOW_DEMO === "true" &&
-	process.env.TOKEN2API_MODE === "local" &&
+	process.env.VANE_MODE === "local" &&
 	chainConfig().mode === "local";
 let bindingCheck: { key: string; done: Promise<void> } | undefined;
 /** Verify the database binding once per process and configuration. Failures are retried. */
@@ -105,6 +103,6 @@ async function verifyChainBinding(config: ChainConfig) {
 		binding.tokenDecimals !== decimalsOf(config)
 	)
 		throw new Error(
-			"Deployment mismatch: use a separate DATABASE_URL and TOKEN2API_DATA_DIR for each deployment.",
+			"Deployment mismatch: use a separate DATABASE_URL and VANE_DATA_DIR for each deployment.",
 		);
 }

@@ -36,8 +36,8 @@ import {
 import { getAccount } from "wagmi/actions";
 import { env } from "~/env";
 import { defineWalletChain, getConnectedWallet } from "~/lib/wallet";
-import type { NetworkInfo } from "~/shared/token2api";
 import { uiPreview } from "~/shared/ui-preview";
+import type { NetworkInfo } from "~/shared/vane";
 import { api } from "~/trpc/react";
 
 type WalletContextValue = {
@@ -51,7 +51,7 @@ type WalletContextValue = {
 };
 const WalletContext = createContext<WalletContextValue | null>(null);
 
-export function useToken2ApiWallet() {
+export function useVaneWallet() {
 	const context = useContext(WalletContext);
 	if (!context) throw new Error("钱包连接服务尚未就绪。");
 	return context;
@@ -72,7 +72,7 @@ function configureWallet(network: NetworkInfo) {
 	return createConfig({
 		chains: [chain],
 		connectors: connectorsForWallets([{ groupName: "连接钱包", wallets }], {
-			appName: "Token2API",
+			appName: "Vane",
 			projectId,
 		}),
 		multiInjectedProviderDiscovery: true,
@@ -82,7 +82,7 @@ function configureWallet(network: NetworkInfo) {
 }
 
 export function WalletProvider({ children }: { children: React.ReactNode }) {
-	const snapshot = api.token2api.snapshot.useQuery(
+	const snapshot = api.vane.snapshot.useQuery(
 		{ gatewayOnly: true },
 		{ retry: 1 },
 	);
@@ -106,7 +106,7 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
 	if (!network) {
 		return (
 			<div className="wallet-loading" role="status">
-				<strong>Token2API</strong>
+				<strong>Vane</strong>
 				<span>
 					{snapshot.error
 						? "连接服务暂不可用，请确认服务已启动。"
@@ -161,10 +161,10 @@ function WalletSessionProvider({ children }: { children: React.ReactNode }) {
 	const account = useAccount();
 	const config = useConfig();
 	const { disconnectAsync } = useDisconnect();
-	const snapshot = api.token2api.snapshot.useQuery({ gatewayOnly: true });
-	const challenge = api.token2api.walletChallenge.useMutation();
-	const login = api.token2api.walletLogin.useMutation();
-	const { mutateAsync: logout } = api.token2api.logout.useMutation();
+	const snapshot = api.vane.snapshot.useQuery({ gatewayOnly: true });
+	const challenge = api.vane.walletChallenge.useMutation();
+	const login = api.vane.walletLogin.useMutation();
+	const { mutateAsync: logout } = api.vane.logout.useMutation();
 	const clearing = useRef<Promise<void> | null>(null);
 	const [sessionError, setSessionError] = useState(false);
 	const viewer = snapshot.data?.viewer;
@@ -279,7 +279,7 @@ function WalletSessionProvider({ children }: { children: React.ReactNode }) {
 				}
 			>
 				<RainbowKitProvider
-					appInfo={{ appName: "Token2API" }}
+					appInfo={{ appName: "Vane" }}
 					locale="zh-CN"
 					modalSize="compact"
 					theme={lightTheme({

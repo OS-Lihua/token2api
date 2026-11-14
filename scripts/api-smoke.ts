@@ -89,7 +89,7 @@ async function login(index: number) {
 	const cookie = response.headers
 		.getSetCookie()
 		.map((value) => value.split(";", 1)[0])
-		.find((value) => value?.startsWith("token2api_session="));
+		.find((value) => value?.startsWith("vane_session="));
 	check(cookie, "Missing wallet session cookie");
 	check(
 		(
@@ -153,7 +153,7 @@ async function main() {
 			{
 				name: `REST smoke ${suffix.slice(0, 8)}`,
 				description: `Local API smoke ${suffix}`,
-				model: "token2api-demo",
+				model: "vane-demo",
 				kind: "demo",
 				inputRate: 1_000_000,
 				outputRate: 2_000_000,

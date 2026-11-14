@@ -1,8 +1,8 @@
-# Token2API 部署
+# Vane 部署
 
 先按[多链结算](../MULTICHAIN.md)配置目标链、资产、独立数据库和运行目录。`pnpm deploy:evm` 部署原生资产或 ERC20 托管合约，并从目标代币合约读取精度。
 
-运行服务设置 `TOKEN2API_MODE=evm`、`ALLOW_DEMO=false`、`DATABASE_URL`、`TOKEN2API_DATA_DIR`、`APP_ORIGIN`、`SESSION_PASSWORD`、`ESCROW_OWNER_PRIVATE_KEY` 与上游允许来源。应用和 worker 必须读取相同公开链配置。外部资金交易等待 6 个区块确认；确认数不代表所有链均具有相同终局保证，实际环境需逐链验收。
+运行服务设置 `VANE_MODE=evm`、`ALLOW_DEMO=false`、`DATABASE_URL`、`VANE_DATA_DIR`、`APP_ORIGIN`、`SESSION_PASSWORD`、`ESCROW_OWNER_PRIVATE_KEY` 与上游允许来源。应用和 worker 必须读取相同公开链配置。外部资金交易等待 6 个区块确认；确认数不代表所有链均具有相同终局保证，实际环境需逐链验收。
 
 ## Web和worker
 
@@ -26,7 +26,7 @@ Vercel 可以承载 Web 和 API，并通过 Marketplace 接入 PostgreSQL。Web 
 ## 发布到 Vercel
 
 1. 在已登录的 Vercel 团队内创建项目，并使用 `vercel link --project <项目名> --scope <团队>` 关联。选择 Next.js、Node.js 24.x、安装命令 `pnpm install --frozen-lockfile` 和构建命令 `pnpm build`。设置 `ENABLE_EXPERIMENTAL_COREPACK=1`，使用 `package.json` 固定的 pnpm 版本。
-2. 在项目的 Environment Variables 中手动配置生产环境。必需项为 `DATABASE_URL`、`TOKEN2API_MODE=evm`、`ALLOW_DEMO=false`、`APP_ORIGIN`、`SESSION_PASSWORD` 和 `CHAIN_CONFIG_JSON`；需要由 Web 发起结算时还须配置 `ESCROW_OWNER_PRIVATE_KEY`。钱包私钥、数据库密码和其他凭证由操作者手动输入，不放入聊天、源码或命令行参数。
+2. 在项目的 Environment Variables 中手动配置生产环境。必需项为 `DATABASE_URL`、`VANE_MODE=evm`、`ALLOW_DEMO=false`、`APP_ORIGIN`、`SESSION_PASSWORD` 和 `CHAIN_CONFIG_JSON`；需要由 Web 发起结算时还须配置 `ESCROW_OWNER_PRIVATE_KEY`。钱包私钥、数据库密码和其他凭证由操作者手动输入，不放入聊天、源码或命令行参数。
 3. `CHAIN_CONFIG_JSON` 使用实际部署的公开元数据，包括链、RPC、托管合约、资产、代币精度和部署区块。生产数据库必须可从 Vercel 访问，不能使用本机 PostgreSQL 或本地链。应用与独立 worker 使用相同的数据库、链配置和密钥。
 4. 在独立发布环境执行 `pnpm db:migrate`，再运行 `pnpm verify`。不要在 Vercel 构建中执行生产数据库迁移。
 5. 先运行 `vercel deploy --dry --json` 检查上传清单，再运行 `vercel deploy --prod`。仓库的 `.vercelignore` 排除 `.env*`、本地运行状态、审计缓存、编辑器配置和构建输出；不要依赖 `.gitignore` 代替上传清单检查。
@@ -75,4 +75,4 @@ PostgreSQL 可以直接在 Vercel Marketplace 创建并绑定到项目，由集�
 
 Web 发布后，用键盘激活“跳到主要内容”，切换到另一工作区页面，再执行浏览器返回；确认地址、标题、内容和焦点一致。
 
-先运行 `pnpm verify`；本地 `pnpm test:e2e` 必须在显式设置 `TOKEN2API_MODE=local`、`ALLOW_DEMO=true` 的隔离数据库与数据目录中运行。再在目标环境以两个真实钱包验证登录、授权、锁预算、真实网关调用、计费、分账、退款和提现。模拟响应和演示身份不能替代真实钱包与上游验收。当前代码支持目标链部署，但本次改动不自动发布或发送真实资金交易。
+先运行 `pnpm verify`；本地 `pnpm test:e2e` 必须在显式设置 `VANE_MODE=local`、`ALLOW_DEMO=true` 的隔离数据库与数据目录中运行。再在目标环境以两个真实钱包验证登录、授权、锁预算、真实网关调用、计费、分账、退款和提现。模拟响应和演示身份不能替代真实钱包与上游验收。当前代码支持目标链部署，但本次改动不自动发布或发送真实资金交易。

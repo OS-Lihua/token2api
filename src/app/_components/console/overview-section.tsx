@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowUpRight } from "lucide-react";
-import type { Snapshot } from "~/shared/token2api";
+import type { Snapshot } from "~/shared/vane";
 import type { Section } from "./format";
 import { Stats, UsageChart } from "./stats";
 import { Panel } from "./ui";

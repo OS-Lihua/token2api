@@ -96,7 +96,7 @@ export const completionResponseSchema = z.object({
 		}),
 	),
 	usage: usageResponseSchema,
-	token2api: billingMetadataSchema,
+	vane: billingMetadataSchema,
 });
 
 export const streamChunkResponseSchema = z.object({

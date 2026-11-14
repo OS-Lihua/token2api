@@ -21,7 +21,7 @@ import type {
 	OpenSessionResult,
 	Snapshot,
 	Viewer,
-} from "~/shared/token2api";
+} from "~/shared/vane";
 import { AppError } from "./auth";
 import {
 	chainBalances,
@@ -44,7 +44,7 @@ import type {
 	listingInput,
 	listingUpdateInput,
 	openSessionInput,
-} from "./token2api.schema";
+} from "./vane.schema";
 
 type Tx = Prisma.TransactionClient;
 export async function lock(tx: Tx, id: string) {

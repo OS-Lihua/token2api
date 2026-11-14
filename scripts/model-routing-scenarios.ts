@@ -231,10 +231,10 @@ export async function runModelRoutingScenarios() {
 	assert.equal(response.status, 200);
 	const body = await response.json();
 	assert.equal(body.model, model.id);
-	assert.equal(body.token2api.unit, billingUnit(config.asset));
+	assert.equal(body.vane.unit, billingUnit(config.asset));
 	const retail = calculateCost(12, 24, model.inputRate, model.outputRate);
 	const wholesale = calculateCost(12, 24, 500_000, 750_000);
-	assert.equal(body.token2api.cost, retail);
+	assert.equal(body.vane.cost, retail);
 	const original = await db.routedInvocation.findUniqueOrThrow({
 		where: {
 			accessKeyId_idempotencyKey: {

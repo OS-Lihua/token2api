@@ -3,7 +3,7 @@
 import { Activity, ArrowDownLeft, Blocks, CircleHelp } from "lucide-react";
 import { useEffect, useState } from "react";
 import { formatChainBalance, formatAmount as usd } from "~/shared/money";
-import type { SessionView, Snapshot } from "~/shared/token2api";
+import type { SessionView, Snapshot } from "~/shared/vane";
 import {
 	CollectionToolbar,
 	FilterField,

@@ -20,7 +20,7 @@ function message(overrides = {}) {
 		issuedAt,
 		expirationTime: new Date(issuedAt.getTime() + 300_000),
 		statement:
-			"Sign in to Token2API. This signature does not authorize token transfers.",
+			"Sign in to Vane. This signature does not authorize token transfers.",
 		...overrides,
 	});
 }
@@ -47,7 +47,7 @@ describe("CLI wallet signing and HTTP boundaries", () => {
 				new ManagementClient("https://evil.example", {
 					platform,
 					address: account.address,
-					cookie: "token2api_session=secret",
+					cookie: "vane_session=secret",
 					expiresAt: Date.now() + 60000,
 				}),
 		).toThrow();

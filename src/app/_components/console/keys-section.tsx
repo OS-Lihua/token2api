@@ -3,7 +3,7 @@
 import { ArrowRight, Check, Copy, KeyRound, Plus } from "lucide-react";
 import { useState } from "react";
 import type { ModelView } from "~/shared/model-routing";
-import type { BuyerConnection, KeyView, Snapshot } from "~/shared/token2api";
+import type { BuyerConnection, KeyView, Snapshot } from "~/shared/vane";
 import {
 	CollectionToolbar,
 	FilterField,
@@ -362,7 +362,7 @@ export function KeysSection({
 				title="快速接入"
 			>
 				<div className="panel-body">
-					<pre className="code-block mono">{`curl ${baseUrl}/chat/completions \\\n  -H "Authorization: Bearer $TOKEN2API_KEY" \\\n  -H "Content-Type: application/json" \\\n  -H "Idempotency-Key: example-request-0001" \\\n  -d '{\n    "model": "${model ?? "YOUR_MODEL_ID"}",\n    "messages": [{"role":"user","content":"Hello"}],\n    "stream": true\n  }'`}</pre>
+					<pre className="code-block mono">{`curl ${baseUrl}/chat/completions \\\n  -H "Authorization: Bearer $VANE_KEY" \\\n  -H "Content-Type: application/json" \\\n  -H "Idempotency-Key: example-request-0001" \\\n  -d '{\n    "model": "${model ?? "YOUR_MODEL_ID"}",\n    "messages": [{"role":"user","content":"Hello"}],\n    "stream": true\n  }'`}</pre>
 					<p className="code-hint">
 						Base URL 使用当前平台地址。API
 						密钥仅能调用已授权的模型，请保存在服务端。每次新调用更换

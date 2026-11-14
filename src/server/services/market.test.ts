@@ -1,7 +1,7 @@
 import type { Listing, Prisma } from "@prisma/client";
 import { unsealData } from "iron-session";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { Viewer } from "~/shared/token2api";
+import type { Viewer } from "~/shared/vane";
 import {
 	confirmSession,
 	createKey,
@@ -11,7 +11,7 @@ import {
 	snapshot,
 	toggleListing,
 } from "./market";
-import { listingInput } from "./token2api.schema";
+import { listingInput } from "./vane.schema";
 
 const mocks = vi.hoisted(() => ({
 	db: {

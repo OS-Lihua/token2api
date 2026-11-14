@@ -34,9 +34,9 @@ type RouteForm = {
 };
 
 export function ModelRoutingAdmin({ asset }: { asset: SettlementAsset }) {
-	const query = api.token2api.operatorModels.useQuery();
-	const saveModel = api.token2api.saveModel.useMutation();
-	const saveRoute = api.token2api.saveModelRoute.useMutation();
+	const query = api.vane.operatorModels.useQuery();
+	const saveModel = api.vane.saveModel.useMutation();
+	const saveRoute = api.vane.saveModelRoute.useMutation();
 	const utils = api.useUtils();
 	const [product, setProduct] = useState<ProductForm | null>(null);
 	const [route, setRoute] = useState<RouteForm | null>(null);
@@ -48,7 +48,7 @@ export function ModelRoutingAdmin({ asset }: { asset: SettlementAsset }) {
 	const busyRef = useRef(false);
 	const [error, setError] = useState<string | null>(null);
 	const [notice, setNotice] = useState<string | null>(null);
-	const resources = api.token2api.operatorResources.useQuery(
+	const resources = api.vane.operatorResources.useQuery(
 		{ limit: 25, q: resourceQuery, gatewayOnly: true, cursor: cursors.at(-1) },
 		{ enabled: !!route },
 	);
@@ -75,7 +75,7 @@ export function ModelRoutingAdmin({ asset }: { asset: SettlementAsset }) {
 			await action();
 			await Promise.all([
 				query.refetch(),
-				utils.token2api.modelCatalog.invalidate(),
+				utils.vane.modelCatalog.invalidate(),
 			]);
 			setNotice(
 				"模型配置已保存，后续请求使用新配置；已有调用继续使用其价格快照。",

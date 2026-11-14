@@ -9,7 +9,7 @@ import {
 	billingUnit,
 	decimalsOf,
 } from "~/shared/settlement-asset";
-import type { Viewer } from "~/shared/token2api";
+import type { Viewer } from "~/shared/vane";
 import { AppError } from "./auth";
 import { chainBalances, clients } from "./chain";
 import type {

@@ -10,7 +10,7 @@ import {
 	isNativeAsset,
 	toChainAmount,
 } from "~/shared/settlement-asset";
-import type { Viewer } from "~/shared/token2api";
+import type { Viewer } from "~/shared/vane";
 import { AppError } from "./auth";
 import { prepaidAccount } from "./model-routing";
 import { chainConfig } from "./runtime";

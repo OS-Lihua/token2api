@@ -20,7 +20,7 @@ import { assetOf, NATIVE_TOKEN } from "../src/shared/settlement-asset";
 
 // Public development mnemonic, identical to the application's demo wallets.
 const mnemonic = "test test test test test test test test test test test junk";
-const directory = path.resolve(process.env.TOKEN2API_DATA_DIR || ".runtime");
+const directory = path.resolve(process.env.VANE_DATA_DIR || ".runtime");
 const configFile = path.join(directory, "chain.json");
 const rpcUrl = "http://127.0.0.1:8545";
 const account = (index: number) =>
@@ -28,9 +28,9 @@ const account = (index: number) =>
 const owner = account(4).address;
 type Artifact = { abi: Abi; bytecode: Hex };
 
-if (process.env.TOKEN2API_MODE !== "local") {
+if (process.env.VANE_MODE !== "local") {
 	throw new Error(
-		"Local chain requires TOKEN2API_MODE=local. Use deploy:evm for EVM network.",
+		"Local chain requires VANE_MODE=local. Use deploy:evm for EVM network.",
 	);
 }
 fs.mkdirSync(directory, { recursive: true });
@@ -79,7 +79,7 @@ async function main() {
 			existing.rpcUrl !== rpcUrl
 		) {
 			throw new Error(
-				"Existing chain configuration belongs to another network. Set a separate TOKEN2API_DATA_DIR.",
+				"Existing chain configuration belongs to another network. Set a separate VANE_DATA_DIR.",
 			);
 		}
 		const token = getAddress(existing.token);
@@ -128,7 +128,7 @@ async function main() {
 		}
 		await assertEscrowOwnerGuard(client, escrow, account(0).address);
 		console.log(`Reusing local escrow ${escrow}`);
-		console.log("TOKEN2API_CHAIN_READY");
+		console.log("VANE_CHAIN_READY");
 		return;
 	}
 
@@ -158,7 +158,7 @@ async function main() {
 	fs.writeFileSync(`${configFile}.tmp`, `${JSON.stringify(config, null, 2)}\n`);
 	fs.renameSync(`${configFile}.tmp`, configFile);
 	console.log(`Local native token; escrow ${config.escrow}`);
-	console.log("TOKEN2API_CHAIN_READY");
+	console.log("VANE_CHAIN_READY");
 }
 
 main().catch(async (error: unknown) => {

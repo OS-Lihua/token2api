@@ -19,7 +19,7 @@ afterEach(async () => {
 	);
 });
 async function temporary() {
-	const directory = await mkdtemp(path.join(tmpdir(), "token2api-cli-main-"));
+	const directory = await mkdtemp(path.join(tmpdir(), "vane-cli-main-"));
 	directories.push(directory);
 	return directory;
 }
@@ -48,7 +48,7 @@ async function signedIn(directory: string) {
 	await writePrivate(store.file("session.json"), {
 		platform,
 		address: account.address,
-		cookie: "token2api_session=test-cookie",
+		cookie: "vane_session=test-cookie",
 		expiresAt: Date.now() + 60_000,
 	});
 	await store.rememberPlatform(platform);
@@ -100,7 +100,7 @@ describe("AI CLI privacy and predictable plans", () => {
 				exitCode: 6,
 				details: {
 					manualCommand: [
-						"token2api",
+						"vane",
 						...command.split(" "),
 						...args,
 						"--interactive",
@@ -189,7 +189,7 @@ describe("merchant CLI workflows", () => {
 			issuedAt: now,
 			expirationTime: new Date(now.getTime() + 300_000),
 			statement:
-				"Sign in to Token2API. This signature does not authorize token transfers.",
+				"Sign in to Vane. This signature does not authorize token transfers.",
 		});
 		const bodies: string[] = [];
 		const fetcher = vi
@@ -224,7 +224,7 @@ describe("merchant CLI workflows", () => {
 				return Response.json(viewer, {
 					headers: {
 						"Set-Cookie":
-							"token2api_session=test-only-login-cookie; HttpOnly; Max-Age=28800",
+							"vane_session=test-only-login-cookie; HttpOnly; Max-Age=28800",
 					},
 				});
 			});

@@ -68,7 +68,7 @@ import {
 	listingUpdateInput,
 	openSessionInput,
 	sessionIdSchema,
-} from "~/server/services/token2api.schema";
+} from "~/server/services/vane.schema";
 import {
 	endpointPolicyInput,
 	endpointStatusInput,
@@ -112,7 +112,7 @@ const mutation = publicProcedure.use(async ({ ctx, next }) => {
 	await call(async () => assertSameOrigin(ctx.headers));
 	return next();
 });
-export const token2apiRouter = createTRPCRouter({
+export const vaneRouter = createTRPCRouter({
 	modelCatalog: publicProcedure.query(() => call(modelCatalog)),
 	operatorModels: publicProcedure.query(() =>
 		call(async () => operatorModels(await requireViewer())),

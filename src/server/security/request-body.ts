@@ -2,7 +2,7 @@ import "server-only";
 import {
 	BODY_READ_TIMEOUT_MS,
 	MAX_RAW_BODY_BYTES,
-} from "~/server/services/token2api.contract";
+} from "~/server/services/vane.contract";
 
 export class BodyReadError extends Error {
 	constructor(

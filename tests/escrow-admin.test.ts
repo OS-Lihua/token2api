@@ -87,7 +87,7 @@ it("operates the single-wallet CLI through handover and fee withdrawal without a
 				{
 					env: {
 						...process.env,
-						TOKEN2API_MODE: "local",
+						VANE_MODE: "local",
 						CHAIN_CONFIG_JSON: JSON.stringify(config),
 						ESCROW_OWNER_PRIVATE_KEY: index === undefined ? "" : key(index),
 						// This endpoint has no database. Administration must use RPC only.

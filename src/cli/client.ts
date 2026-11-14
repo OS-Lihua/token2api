@@ -31,7 +31,7 @@ export function walletAddress(privateKey: Hex) {
 	}
 }
 const statement =
-	"Sign in to Token2API. This signature does not authorize token transfers.";
+	"Sign in to Vane. This signature does not authorize token transfers.";
 export function validateLoginMessage(
 	message: string,
 	address: string,
@@ -173,7 +173,7 @@ export class ManagementClient {
 			);
 			const cookie = response.headers
 				.getSetCookie()
-				.find((value) => value.startsWith("token2api_session="))
+				.find((value) => value.startsWith("vane_session="))
 				?.split(";")[0];
 			return { data, ...(cookie ? { cookie } : {}) };
 		} catch (error) {

@@ -32,7 +32,7 @@ import {
 	listingUpdateInput,
 	openSessionInput,
 	sessionIdSchema,
-} from "~/server/services/token2api.schema";
+} from "~/server/services/vane.schema";
 import {
 	keyModels,
 	modelProductResponse,
@@ -40,7 +40,7 @@ import {
 	prepaidTransactionResponse,
 	prepaidTransferInput,
 } from "~/shared/model-routing";
-import type { Viewer } from "~/shared/token2api";
+import type { Viewer } from "~/shared/vane";
 import { createRestMutation, createRestQuery } from "./endpoint";
 
 // Apply even to rate-limit, JSON parsing and validation errors from the shared wrapper.

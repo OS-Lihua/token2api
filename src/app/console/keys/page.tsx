@@ -3,7 +3,7 @@ import { ConsolePageContent } from "~/app/_components/console/page-content";
 import { consoleRoutes } from "~/app/_components/console/routes";
 
 export const metadata: Metadata = {
-	title: `${consoleRoutes.keys.title} · Token2API`,
+	title: `${consoleRoutes.keys.title} · Vane`,
 	description: consoleRoutes.keys.description,
 };
 

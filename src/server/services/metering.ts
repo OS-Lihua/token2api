@@ -4,7 +4,7 @@ import { createHash } from "node:crypto";
 import { unsealData } from "iron-session";
 import type { z } from "zod";
 import { db } from "~/server/db";
-import type { ChatResult } from "~/shared/token2api";
+import type { ChatResult } from "~/shared/vane";
 import { AppError } from "./auth";
 import { readEscrowPaused, readSession } from "./chain";
 import { resourceAvailable } from "./connector-availability";
@@ -14,7 +14,7 @@ import { runLocalConnector } from "./local-connector";
 import { lock } from "./market";
 import { EngineFailure, runEngine } from "./pool-engine";
 import { demoEnabled, sessionPassword } from "./runtime";
-import type { chatInput } from "./token2api.schema";
+import type { chatInput } from "./vane.schema";
 
 export function calculateCost(
 	input: number,

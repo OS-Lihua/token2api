@@ -1,7 +1,7 @@
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { expect, it, vi } from "vitest";
-import { Token2ApiAdmin } from "~/app/_components/token2api-admin";
+import { VaneAdmin } from "~/app/_components/vane-admin";
 
 const { statusQuery } = vi.hoisted(() => ({
 	statusQuery: vi.fn(() => ({
@@ -14,7 +14,7 @@ const { statusQuery } = vi.hoisted(() => ({
 vi.mock("~/shared/ui-preview", () => ({ uiPreview: true }));
 vi.mock("~/trpc/react", () => ({
 	api: {
-		token2api: {
+		vane: {
 			snapshot: {
 				useQuery: () => ({
 					data: {
@@ -31,7 +31,7 @@ vi.mock("~/trpc/react", () => ({
 	},
 }));
 vi.mock("~/app/_components/wallet-provider", () => ({
-	useToken2ApiWallet: () => ({ address: undefined, isConnected: false }),
+	useVaneWallet: () => ({ address: undefined, isConnected: false }),
 }));
 vi.mock("@rainbow-me/rainbowkit", () => ({
 	ConnectButton: () => {
@@ -40,7 +40,7 @@ vi.mock("@rainbow-me/rainbowkit", () => ({
 }));
 
 it("keeps the admin preview readable without a wallet provider or protected queries", () => {
-	const html = renderToStaticMarkup(createElement(Token2ApiAdmin));
+	const html = renderToStaticMarkup(createElement(VaneAdmin));
 	expect(html).toContain("预览模式不执行管理员操作");
 	expect(html).not.toContain("新增地址");
 	expect(statusQuery).toHaveBeenCalledWith(

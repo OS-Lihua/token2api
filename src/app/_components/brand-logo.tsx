@@ -9,13 +9,13 @@ export function BrandLogo({
 }) {
 	return (
 		<Image
-			alt="Token2API"
+			alt="Vane"
 			className={`brand-logo ${className ?? ""}`}
-			height={60}
+			height={81}
 			loading="eager"
 			src={`/brand/logo-${tone}.svg`}
 			unoptimized
-			width={272}
+			width={250}
 		/>
 	);
 }

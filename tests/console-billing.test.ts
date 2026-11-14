@@ -3,8 +3,8 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { BillingSection } from "~/app/_components/console/billing-section";
 import { requestUsagePending } from "~/app/_components/console/format";
-import type { RequestView, Snapshot } from "~/shared/token2api";
 import { previewSnapshot } from "~/shared/ui-preview";
+import type { RequestView, Snapshot } from "~/shared/vane";
 
 const request: RequestView = {
 	id: "review-request",

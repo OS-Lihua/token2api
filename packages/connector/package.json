@@ -1,12 +1,12 @@
 {
-	"name": "@token2api/connector",
+	"name": "@vane/connector",
 	"version": "0.2.0",
-	"description": "Token2API merchant CLI and local gateway connector with manual secret entry",
+	"description": "Vane merchant CLI and local gateway connector with manual secret entry",
 	"license": "MIT",
 	"type": "module",
 	"bin": {
-		"token2api": "dist/cli.mjs",
-		"token2api-connector": "dist/connector.mjs"
+		"vane": "dist/cli.mjs",
+		"vane-connector": "dist/connector.mjs"
 	},
 	"files": [
 		"dist/connector.mjs",

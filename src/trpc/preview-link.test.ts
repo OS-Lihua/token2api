@@ -31,7 +31,7 @@ describe("frontend preview isolation", () => {
 		const fetch = vi.fn();
 		vi.stubGlobal("fetch", fetch);
 		const client = createTRPCClient<AppRouter>({ links: [previewLink] });
-		const result = await client.token2api.snapshot.query({ gatewayOnly: true });
+		const result = await client.vane.snapshot.query({ gatewayOnly: true });
 		expect(result.network.ready).toBe(false);
 		expect(result.metrics.walletBalance).toBeNull();
 		expect(result.metrics.claimable).toBeNull();
@@ -48,11 +48,11 @@ describe("frontend preview isolation", () => {
 		const fetch = vi.fn();
 		vi.stubGlobal("fetch", fetch);
 		const client = createTRPCClient<AppRouter>({ links: [previewLink] });
-		await expect(client.token2api.logout.mutate()).rejects.toThrow(
+		await expect(client.vane.logout.mutate()).rejects.toThrow(
 			"UI 预览模式不执行后端操作。",
 		);
 		await expect(
-			client.token2api.createKey.mutate({
+			client.vane.createKey.mutate({
 				sessionId: "preview-only",
 				name: "preview",
 			}),

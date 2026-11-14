@@ -8,7 +8,7 @@ import type {
 	endpointPolicyInput,
 	endpointStatusInput,
 } from "~/shared/gateway-config";
-import type { Viewer } from "~/shared/token2api";
+import type { Viewer } from "~/shared/vane";
 import { AppError } from "./auth";
 import { clients } from "./chain";
 import type { operatorResourcesInput } from "./operator.schema";

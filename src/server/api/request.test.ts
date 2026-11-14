@@ -5,7 +5,7 @@ import { GET, POST } from "~/app/api/trpc/[trpc]/route";
 import {
 	BODY_READ_TIMEOUT_MS,
 	MAX_RAW_BODY_BYTES,
-} from "~/server/services/token2api.contract";
+} from "~/server/services/vane.contract";
 import { MAX_TRPC_BATCH_SIZE } from "~/shared/trpc-limits";
 
 const mocks = vi.hoisted(() => ({
@@ -115,7 +115,7 @@ describe("actual tRPC route input limits", () => {
 	it("accepts framework-wrapped requests without accessing their private state", async () => {
 		const request = new Proxy(
 			post(JSON.stringify({ json: { message: "bounded" } }), "write", {
-				cookie: "token2api_session=local-test",
+				cookie: "vane_session=local-test",
 			}),
 			{
 				get(target, property) {

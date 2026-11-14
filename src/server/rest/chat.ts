@@ -7,7 +7,7 @@ import { AppError } from "~/server/services/auth";
 import { authenticateKey } from "~/server/services/market";
 import { runChat } from "~/server/services/metering";
 import { runModelChat } from "~/server/services/model-routing";
-import { publicChatInput } from "~/server/services/token2api.schema";
+import { publicChatInput } from "~/server/services/vane.schema";
 import { createRestMutation, createRestQuery } from "./endpoint";
 
 const headers = {
@@ -39,7 +39,7 @@ function requestKey(request: Request) {
 const keySubject = async (request: Request) =>
 	`key:${(await requestKey(request)).id}`;
 export const chatPost = createRestMutation({
-	route: "token2api:chat",
+	route: "vane:chat",
 	credential: keySubject,
 	input: publicChatInput,
 	handler: async ({ input, request }) => {
@@ -129,7 +129,7 @@ export const chatPost = createRestMutation({
 							completion_tokens: result.outputTokens,
 							total_tokens: result.inputTokens + result.outputTokens,
 						},
-						token2api: billingMetadata,
+						vane: billingMetadata,
 					},
 					{ headers: { ...headers, "x-idempotency-key": idempotencyKey } },
 				);
@@ -210,7 +210,7 @@ export const chatPost = createRestMutation({
 	},
 });
 export const modelsGet = createRestQuery({
-	route: "token2api:models",
+	route: "vane:models",
 	credential: keySubject,
 	handler: async ({ request }) => {
 		try {
@@ -234,7 +234,7 @@ export const modelsGet = createRestQuery({
 					).map((model) => ({
 						id: model.id,
 						createdAt: model.createdAt,
-						owner: "token2api",
+						owner: "vane",
 					}));
 			return Response.json(
 				{

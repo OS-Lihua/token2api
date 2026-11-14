@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { connectorTokenSchema } from "~/shared/connector";
 import { discoveredModel, modelCatalog } from "~/shared/model-catalog";
-import { listingInput } from "./token2api.schema";
+import { listingInput } from "./vane.schema";
 
 export const localListingInput = listingInput.options[1]
 	.omit({ baseUrl: true, apiKey: true, proxy: true, concurrency: true })

@@ -1,4 +1,4 @@
-# Token2API
+# Vane
 
 AI 资源市场 · 多链结算平台。新部署默认 Base + USDC，支持配置 USDT；业务报价与结算使用选定资产，Gas 使用该链原生代币。支持 Ethereum 主网、Base、Arbitrum、Optimism、BNB Smart Chain（BSC）、Polygon、Avalanche 和 Robinhood Chain，按链使用原生代币及已配置的 USDT、USDC 合约。
 
@@ -10,7 +10,7 @@ AI 资源市场 · 多链结算平台。新部署默认 Base + USDC，支持配�
 
 ## 本地启动
 
-商家也可使用完整的 [`token2api` CLI](docs/CLI.md)，通过终端钱包签名登录、配置网关、设置报价并上架，无需网页。AI 可读取命令 Schema、预演和管理公开配置；私钥、密码及网关 Key 必须由用户本人在真实终端隐藏输入。私钥仅用于本地签名，本机资源凭证加密保存；普通命令默认输出 JSON，持续接单输出 NDJSON。
+商家也可使用完整的 [`vane` CLI](docs/CLI.md)，通过终端钱包签名登录、配置网关、设置报价并上架，无需网页。AI 可读取命令 Schema、预演和管理公开配置；私钥、密码及网关 Key 必须由用户本人在真实终端隐藏输入。私钥仅用于本地签名，本机资源凭证加密保存；普通命令默认输出 JSON，持续接单输出 NDJSON。
 
 需要 Node.js 24+、pnpm 11、Docker。在仓库根目录执行：
 
@@ -24,15 +24,15 @@ pnpm dev
 
 调用者在“模型市场”查看管理员发布的模型与统一报价，在“API 密钥”创建 Key 并授权模型。商家在“我的资源”通过 gateway 或 pool connector 接入资源；管理员再将资源映射到平台模型。没有真实模型或业务记录时显示空状态。钱包签名登录保持不变；用户端不启用演示登录。
 
-打开[本地首页](http://localhost:3000)或[业务控制台](http://localhost:3000/console)。`setup` 创建 `.env`、启动 PostgreSQL 并执行迁移。配置 `TOKEN2API_MODE=evm`、`SETTLEMENT_CHAIN_ID`、`SETTLEMENT_ASSET` 和独立运行目录后，`deploy:evm` 写入公开部署信息。`dev` 启动 Web 和结算 worker。实际可用的链和资产以 `/api/v1/network` 为准。
+打开[本地首页](http://localhost:3000)或[业务控制台](http://localhost:3000/console)。`setup` 创建 `.env`、启动 PostgreSQL 并执行迁移。配置 `VANE_MODE=evm`、`SETTLEMENT_CHAIN_ID`、`SETTLEMENT_ASSET` 和独立运行目录后，`deploy:evm` 写入公开部署信息。`dev` 启动 Web 和结算 worker。实际可用的链和资产以 `/api/v1/network` 为准。
 
 控制台围绕“创建 Key → 授权模型 → 充值 → 调用”组织。模型市场每页 9 条，支持搜索、可用状态筛选和输入/输出价格排序。Key 明确授权 1–100 个模型，新增模型不会自动授权；完整 Key 仅显示一次。调用实验室选择 Key 和已授权模型，平台负责上游路由。账单显示调用费用、预留、待核对和结算状态；未用预留退回预付余额，原会话退款仍转入可提现余额。统计基于当前最多 200 条请求与 100 个会话，前端分页不代表完整历史。网络、结算资产与 Gas 币种明确分开；未知用量不显示零费用。
 
 首页 `/` 围绕“创建 Key、授权模型、平台路由”说明产品，并提供调用者、商家和管理员入口。链目录表示适配范围，实际可用网络和资产以当前部署为准。网页操作见[下游指南](docs/CONSUMER_GUIDE.md#网页使用)和[商家指南](docs/MERCHANT_GUIDE.md#网页使用)。
 
-界面使用 Token2API 独立标志、蓝色操作主色、灰白内容区和深蓝导航。成功、待核对、错误分别使用独立语义色。首页以多链节点、结算中心和独立链色说明支持范围。素材说明见[品牌资料](docs/BRAND_ASSETS.md)。
+界面使用 Vane 独立标志、酸橙绿操作主色、暖白内容区和石墨黑导航。成功、待核对、错误分别使用独立语义色。首页以多链节点、结算中心和独立链色说明支持范围。素材说明见[品牌资料](docs/BRAND_ASSETS.md)。
 
-品牌标志以两条圆润的相向折带表达连接与交换，统一圆角与间距，使用青绿与白色的无描边轮廓。首页、控制台与首屏图形保持一致。透明矢量源为 [`public/token2api-mark.svg`](public/token2api-mark.svg)，透明背景的浏览器图标为 [`public/icon.svg`](public/icon.svg)，ICO 包含 16、32、48 像素版本。品牌标志保留青绿配色，产品界面使用蓝色主操作与灰白内容区；不使用圆角底板。首页省去 BETA、英文眉题、装饰标签与重复标语，保留功能说明和必要的 API 配置提示。
+品牌标志是一枚粗重的 V 字形：右上方一段短切块从主体分离并轻微旋转，主体仍完整可读为 V，脱落的碎片对应「快到期的额度被拆出并流转」。标志以几何路径绘制，字标为 Manrope 620 的轮廓路径，不依赖本地字体。透明背景矢量标志为 [`public/brand/logo-dark.svg`](public/brand/logo-dark.svg)（浅底版本为 [`public/brand/logo-light.svg`](public/brand/logo-light.svg)），浏览器图标为 [`public/icon.svg`](public/icon.svg)，ICO 包含 16、32、48 像素版本，16px 与 32px 使用去掉切块的简化形。符号使用酸橙绿单色，产品界面采用酸橙绿主操作与暖白内容区；图标为酸橙绿底板配石墨黑符号。首页省去 BETA、英文眉题、装饰标签与重复标语，保留功能说明和必要的 API 配置提示。
 
 概览精简重复的辅助说明，空状态只保留必要标题。统计范围直接显示，并保留屏幕阅读器说明；输入与输出明细、待结算金额仅在非零时显示。价格单位按当前结算资产显示，本地环境保留测试标识。
 
@@ -47,7 +47,7 @@ pnpm dev
 - **本机连接器**：上游 Key 保留在商家机器，由 CLI 出站接单并调用网关。
 - **平台直连**：填写上游服务地址和 API Key，读取模型列表后选择模型、报价和并发上限。平台加密保存调用 Key。
 
-网关地址、端口和 API 基础路径可自定义，Magpie 地址仅为示例；根地址默认使用 `/v1`，自定义路径原样保留。网关须支持文本 Chat Completions、流式响应和最终 Token usage。平台直连的完整 API 基础地址须由当前管理员钱包在 `/admin` 加入白名单；可选 HTTP/HTTPS 代理，代理地址也须单独批准。调用 Key 和代理认证信息加密保存。后台可停用地址并查看关联资源；本机连接器的真实上游不在平台直连核验范围内。升级步骤见[接入管理后台](docs/ADMIN_GUIDE.md)。Token2API 使用钱包签名登录，不提供第三方账号登录或授权，也不接收账号 access token、refresh token 或上游管理密钥。
+网关地址、端口和 API 基础路径可自定义，Magpie 地址仅为示例；根地址默认使用 `/v1`，自定义路径原样保留。网关须支持文本 Chat Completions、流式响应和最终 Token usage。平台直连的完整 API 基础地址须由当前管理员钱包在 `/admin` 加入白名单；可选 HTTP/HTTPS 代理，代理地址也须单独批准。调用 Key 和代理认证信息加密保存。后台可停用地址并查看关联资源；本机连接器的真实上游不在平台直连核验范围内。升级步骤见[接入管理后台](docs/ADMIN_GUIDE.md)。Vane 使用钱包签名登录，不提供第三方账号登录或授权，也不接收账号 access token、refresh token 或上游管理密钥。
 
 REST 创建资源使用 `kind: "gateway"`，资源查询支持 `q`、`kind`。模型与连接凭证在上架后不可更改。升级数据库时运行 `pnpm db:migrate`；生产迁移独立执行。
 
@@ -59,7 +59,7 @@ REST 创建资源使用 `kind: "gateway"`，资源查询支持 `q`、`kind`。�
 
 - 不配置服务账号即可连接已安装的 MetaMask、Rabby 等 EIP-6963 浏览器钱包；另有 Rabby 安装入口和通用注入连接器。
 - 在 `.env` 配置 `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` 后重新构建，可增加 MetaMask、Rainbow 与通用 WalletConnect 扫码入口。ID 从 [WalletConnect Dashboard](https://dashboard.walletconnect.com) 获取；仓库不包含任何人的项目 ID。
-- 钱包按当前部署切换网络，Gas 使用本链原生代币。仅显式设置 `TOKEN2API_MODE=local` 时使用本地链 31337。
+- 钱包按当前部署切换网络，Gas 使用本链原生代币。仅显式设置 `VANE_MODE=local` 时使用本地链 31337。
 - 切换账户或断开钱包会使旧的钱包登录失效，并清理界面中的私密状态；演示身份保持独立。授权、锁定预算等多步操作在每一步前重新核实当前账户与网络。
 
 浏览器选择弹窗和模拟连接器的账号/网络边界已验证。真实扩展钱包签名、手机扫码和测试网资金操作需对应钱包、Project ID 与测试网部署再验收。
@@ -67,12 +67,12 @@ REST 创建资源使用 `kind: "gateway"`，资源查询支持 `q`、`kind`。�
 | 服务 | 地址或位置 |
 | --- | --- |
 | Web | `http://localhost:3000` |
-| PostgreSQL | `127.0.0.1:55432`，数据库 `token2api` |
+| PostgreSQL | `127.0.0.1:55432`，数据库 `vane` |
 | 链与资产 | `CHAIN_CONFIG_JSON` 或公开 `chain.json` |
 | 部署信息 | `.runtime/evm/<chainId>-<asset>/chain.json`，仅公开字段 |
 | API 规范 | `/api/v1/openapi.json` |
 
-数据库和链必须成对保留。每套部署使用独立 `DATABASE_URL` 和 `TOKEN2API_DATA_DIR`，后端固定绑定链 ID、资产、代币精度与托管合约。切换这些字段时使用新账本。本地演示与故障注入仅接受显式选择的回环链 31337。
+数据库和链必须成对保留。每套部署使用独立 `DATABASE_URL` 和 `VANE_DATA_DIR`，后端固定绑定链 ID、资产、代币精度与托管合约。切换这些字段时使用新账本。本地演示与故障注入仅接受显式选择的回环链 31337。
 
 ## API 调用
 
@@ -82,7 +82,7 @@ REST 创建资源使用 `kind: "gateway"`，资源查询支持 `q`、`kind`。�
 
 ```bash
 curl http://localhost:3000/v1/chat/completions \
-  -H "Authorization: Bearer $TOKEN2API_KEY" \
+  -H "Authorization: Bearer $VANE_KEY" \
   -H "Content-Type: application/json" \
   -H "Idempotency-Key: example-request-0001" \
   -d '{"model":"platform-model-id","messages":[{"role":"user","content":"Explain settlement"}],"max_tokens":512,"stream":true,"stream_options":{"include_usage":true}}'
@@ -95,7 +95,7 @@ import { randomUUID } from "node:crypto";
 import OpenAI from "openai";
 
 const client = new OpenAI({
-  apiKey: process.env.TOKEN2API_KEY,
+  apiKey: process.env.VANE_KEY,
   baseURL: "http://localhost:3000/v1",
   maxRetries: 0,
 });

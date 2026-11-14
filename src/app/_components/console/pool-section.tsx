@@ -3,7 +3,7 @@
 import { ArrowRight, ShieldCheck } from "lucide-react";
 import { useState } from "react";
 import { formatChainBalance } from "~/shared/money";
-import type { ListingView, Snapshot } from "~/shared/token2api";
+import type { ListingView, Snapshot } from "~/shared/vane";
 import {
 	CollectionToolbar,
 	FilterField,

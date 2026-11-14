@@ -2,7 +2,7 @@
 
 import { Activity, Blocks, Wallet, Zap } from "lucide-react";
 import { formatAmount as usd } from "~/shared/money";
-import type { Snapshot } from "~/shared/token2api";
+import type { Snapshot } from "~/shared/vane";
 import { compact, requestUsagePending } from "./format";
 
 export function Stats({ data }: { data: Snapshot }) {

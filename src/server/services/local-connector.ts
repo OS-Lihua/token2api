@@ -11,7 +11,7 @@ import {
 	type connectorUpdate,
 } from "~/shared/connector";
 import { modelCatalog } from "~/shared/model-catalog";
-import type { Viewer } from "~/shared/token2api";
+import type { Viewer } from "~/shared/vane";
 import { AppError } from "./auth";
 import { connectorOnline, resourceAvailable } from "./connector-availability";
 import type {

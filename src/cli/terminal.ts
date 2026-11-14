@@ -12,12 +12,7 @@ export function manualRequired(
 		6,
 		{
 			field,
-			manualCommand: [
-				"token2api",
-				...command.split(" "),
-				...args,
-				"--interactive",
-			],
+			manualCommand: ["vane", ...command.split(" "), ...args, "--interactive"],
 			resume: "用户完成后，AI 再运行 auth status 或 resource list 检查状态。",
 		},
 	);

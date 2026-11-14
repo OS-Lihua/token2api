@@ -56,7 +56,7 @@ import {
 	isConsoleSection,
 } from "~/app/_components/console/routes";
 import { Badge, Loading } from "~/app/_components/console/ui";
-import { useToken2ApiWallet } from "~/app/_components/wallet-provider";
+import { useVaneWallet } from "~/app/_components/wallet-provider";
 import { connectorStartCommand } from "~/shared/connector-distribution";
 import { modelKeyInput } from "~/shared/model-routing";
 import { parseMicroAmount, formatAmount as usd } from "~/shared/money";
@@ -66,12 +66,8 @@ import {
 	SETTLEMENT_CHAINS,
 } from "~/shared/network";
 import { isNativeAsset } from "~/shared/settlement-asset";
-import type {
-	BuyerConnection,
-	RefundView,
-	SessionView,
-} from "~/shared/token2api";
 import { previewModels, previewSnapshot, uiPreview } from "~/shared/ui-preview";
+import type { BuyerConnection, RefundView, SessionView } from "~/shared/vane";
 import { api } from "~/trpc/react";
 
 // Overview is the landing section; every other section and all dialogs load on demand.
@@ -146,16 +142,12 @@ const navigation = [
 	{ id: "billing", label: "账单与结算", icon: Blocks },
 	{ id: "keys", label: "API 密钥", icon: KeyRound },
 ] satisfies { id: Section; label: string; icon: LucideIcon }[];
-export function Token2ApiConsole({ children }: { children: ReactNode }) {
+export function VaneConsole({ children }: { children: ReactNode }) {
 	const router = useRouter();
 	const segment = useSelectedLayoutSegment();
 	const section = isConsoleSection(segment) ? segment : "overview";
 	const previousSectionRef = useRef(section);
-	const {
-		getWallet,
-		address: connectedAddress,
-		isConnected,
-	} = useToken2ApiWallet();
+	const { getWallet, address: connectedAddress, isConnected } = useVaneWallet();
 	const [billingTarget, setBillingTarget] = useState(false);
 	const [mobileOpen, setMobileOpen] = useState(false);
 	const menuButtonRef = useRef<HTMLButtonElement>(null);
@@ -185,42 +177,39 @@ export function Token2ApiConsole({ children }: { children: ReactNode }) {
 			? (launch?.command ?? null)
 			: null;
 	const [newKey, setNewKey] = useState<BuyerConnection | null>(null);
-	const [prompt, setPrompt] = useState(
-		"用三句话解释 Token2API 的链上结算流程。",
-	);
+	const [prompt, setPrompt] = useState("用三句话解释 Vane 的链上结算流程。");
 	const [messages, setMessages] = useState<ChatMessage[]>([]);
 	const [conversationId, setConversationId] = useState(() => "");
 	const [copied, setCopied] = useState(false);
-	const snapshot = api.token2api.snapshot.useQuery(
+	const snapshot = api.vane.snapshot.useQuery(
 		{ gatewayOnly: true },
 		{ refetchInterval: 15_000 },
 	);
-	const createLocalDraft = api.token2api.createLocalDraft.useMutation();
-	const createConnectorLaunch =
-		api.token2api.createConnectorLaunch.useMutation();
-	const publishLocalDraft = api.token2api.publishLocalDraft.useMutation();
-	const rotateConnector = api.token2api.rotateConnector.useMutation();
-	const createListing = api.token2api.createListing.useMutation();
-	const toggleListing = api.token2api.toggleListing.useMutation();
-	const confirmSession = api.token2api.confirmSession.useMutation();
-	const createKey = api.token2api.createKey.useMutation();
-	const revokeKey = api.token2api.revokeKey.useMutation();
-	const chat = api.token2api.modelChat.useMutation();
-	const updateModels = api.token2api.updateKeyModels.useMutation();
-	const prepareTransfer = api.token2api.preparePrepaidTransfer.useMutation();
-	const settle = api.token2api.settle.useMutation();
-	const requestRefund = api.token2api.requestRefund.useMutation();
-	const withdraw = api.token2api.withdraw.useMutation();
+	const createLocalDraft = api.vane.createLocalDraft.useMutation();
+	const createConnectorLaunch = api.vane.createConnectorLaunch.useMutation();
+	const publishLocalDraft = api.vane.publishLocalDraft.useMutation();
+	const rotateConnector = api.vane.rotateConnector.useMutation();
+	const createListing = api.vane.createListing.useMutation();
+	const toggleListing = api.vane.toggleListing.useMutation();
+	const confirmSession = api.vane.confirmSession.useMutation();
+	const createKey = api.vane.createKey.useMutation();
+	const revokeKey = api.vane.revokeKey.useMutation();
+	const chat = api.vane.modelChat.useMutation();
+	const updateModels = api.vane.updateKeyModels.useMutation();
+	const prepareTransfer = api.vane.preparePrepaidTransfer.useMutation();
+	const settle = api.vane.settle.useMutation();
+	const requestRefund = api.vane.requestRefund.useMutation();
+	const withdraw = api.vane.withdraw.useMutation();
 	const data = uiPreview ? previewSnapshot : snapshot.data;
 	const asset = data?.network.asset ?? DEFAULT_NETWORK.asset;
 	const nativeSymbol = data ? networkMetadata(data.network).nativeSymbol : "";
 	const viewer = data?.viewer;
-	const catalogQuery = api.token2api.modelCatalog.useQuery(undefined, {
+	const catalogQuery = api.vane.modelCatalog.useQuery(undefined, {
 		enabled: !uiPreview,
 		refetchInterval: 15_000,
 	});
 	const catalog = uiPreview ? previewModels : (catalogQuery.data ?? []);
-	const prepaidQuery = api.token2api.prepaidAccount.useQuery(
+	const prepaidQuery = api.vane.prepaidAccount.useQuery(
 		{ address: viewer?.address ?? `0x${"00".repeat(20)}` },
 		{ enabled: !!viewer && !uiPreview, refetchInterval: 15_000, retry: false },
 	);
@@ -236,7 +225,7 @@ export function Token2ApiConsole({ children }: { children: ReactNode }) {
 		labModels[0]?.id ??
 		"";
 
-	const refundQuery = api.token2api.refundStatus.useQuery(
+	const refundQuery = api.vane.refundStatus.useQuery(
 		{ sessionId: refundSession?.id ?? `0x${"00".repeat(32)}` },
 		{
 			enabled: !!refundSession && !!refundInfo && !!viewer,
@@ -890,7 +879,7 @@ export function Token2ApiConsole({ children }: { children: ReactNode }) {
 				className={`sidebar ${mobileOpen ? "is-open" : ""}`}
 				ref={sidebarRef}
 			>
-				<a aria-label="Token2API 首页" className="brand" href="/">
+				<a aria-label="Vane 首页" className="brand" href="/">
 					<BrandLogo tone="dark" />
 				</a>
 				<button

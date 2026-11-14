@@ -1,7 +1,7 @@
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { createTRPCContext, createTRPCRouter } from "../trpc";
-import { token2apiRouter } from "./token2api";
+import { vaneRouter } from "./vane";
 
 const mocks = vi.hoisted(() => ({
 	walletLogin: vi.fn(),
@@ -47,7 +47,7 @@ vi.mock("~/server/services/settlement", () => ({
 }));
 
 const router = createTRPCRouter({
-	token2api: token2apiRouter,
+	vane: vaneRouter,
 });
 const address = `0x${"11".repeat(20)}`;
 function request(
@@ -55,7 +55,7 @@ function request(
 	input: unknown,
 	origin = "http://localhost:3000",
 ) {
-	const req = new Request(`http://localhost:3000/api/trpc/token2api.${path}`, {
+	const req = new Request(`http://localhost:3000/api/trpc/vane.${path}`, {
 		method: "POST",
 		headers: { origin, "content-type": "application/json" },
 		body: JSON.stringify({ json: input }),
@@ -68,7 +68,7 @@ function request(
 	});
 }
 
-describe("Token2API HTTP router authentication boundaries", () => {
+describe("Vane HTTP router authentication boundaries", () => {
 	beforeEach(() => {
 		vi.stubEnv("APP_ORIGIN", "http://localhost:3000");
 		vi.resetAllMocks();
@@ -106,7 +106,7 @@ describe("Token2API HTTP router authentication boundaries", () => {
 
 	it("rejects every cross-origin operation in a batch", async () => {
 		const req = new Request(
-			"http://localhost:3000/api/trpc/token2api.walletChallenge,token2api.logout?batch=1",
+			"http://localhost:3000/api/trpc/vane.walletChallenge,vane.logout?batch=1",
 			{
 				method: "POST",
 				headers: {

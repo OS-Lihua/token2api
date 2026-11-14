@@ -1,6 +1,6 @@
 # Agent Instructions
 
-Token2API is an AI resource marketplace built on a production-oriented T3 web API template. Preserve the shared infrastructure and keep financial logic in explicit domain services.
+Vane is an AI resource marketplace built on a production-oriented T3 web API template. Preserve the shared infrastructure and keep financial logic in explicit domain services.
 
 ## Communication Style
 
@@ -74,7 +74,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 <!-- END:nextjs-agent-rules -->
 
-## Token2API domain rules
+## Vane domain rules
 
 - Money is integer millionths of the configured settlement asset; prices are micro-units per million tokens. Convert chain amounts using tokenDecimals (6–18). Each deployment fixes chain, asset, token precision and escrow in an isolated database. Never reinterpret or convert legacy balances.
 - A lease fixes one provider, resource and price snapshot. Never charge above its budget.
@@ -82,5 +82,5 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Persist settlement jobs before sending transactions; recover by nonce and receipt hash.
 - Demo identities and public test keys only operate on loopback chain 31337.
 - Authenticate users with wallet signatures. Resource connectors use gateway URLs and inference API keys; do not add third-party OAuth login or account-authorization flows.
-- Keep the product name Token2API; use token2api for repository and package names. Use only the current naming conventions; do not add legacy configuration, command or protocol aliases. Connector terminology is gateway or pool connector.
+- Keep the product name Vane; use vane for repository and package names. Use only the current naming conventions; do not add legacy configuration, command or protocol aliases. Connector terminology is gateway or pool connector.
 - If a .codegraph directory exists, use CodeGraph before searching or reading code.

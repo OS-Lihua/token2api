@@ -16,16 +16,16 @@ import {
 } from "viem/siwe";
 import { z } from "zod";
 import { db } from "~/server/db";
-import type { Viewer } from "~/shared/token2api";
+import type { Viewer } from "~/shared/vane";
 import { demoAccount, clients as publicChain } from "./chain";
 import { chainConfig, demoEnabled, sessionPassword } from "./runtime";
-import { walletSignatureSchema } from "./token2api.schema";
+import { walletSignatureSchema } from "./vane.schema";
 
-export { walletSignatureSchema } from "./token2api.schema";
+export { walletSignatureSchema } from "./vane.schema";
 
 const challengeLifetimeMs = 300_000;
 const signInStatement =
-	"Sign in to Token2API. This signature does not authorize token transfers.";
+	"Sign in to Vane. This signature does not authorize token transfers.";
 function walletAddress(address: string) {
 	try {
 		return getAddress(address);
@@ -54,7 +54,7 @@ const viewerSchema = z.object({
 });
 async function authSession() {
 	return getIronSession<{ viewer?: Viewer }>(await cookies(), {
-		cookieName: "token2api_session",
+		cookieName: "vane_session",
 		password: sessionPassword(),
 		ttl: 8 * 3600,
 		cookieOptions: {

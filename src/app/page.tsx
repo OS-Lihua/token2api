@@ -1,5 +1,5 @@
-import { Token2ApiLanding } from "~/app/_components/token2api-landing";
+import { VaneLanding } from "~/app/_components/vane-landing";
 
 export default function Home() {
-	return <Token2ApiLanding />;
+	return <VaneLanding />;
 }

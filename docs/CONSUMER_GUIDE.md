@@ -69,10 +69,10 @@ curl -b "$COOKIE_JAR" "$BASE_URL/api/v1/consumer/prepaid/transactions" \
 ## 调用模型
 
 ```bash
-curl "$BASE_URL/v1/models" -H "Authorization: Bearer $TOKEN2API_KEY"
+curl "$BASE_URL/v1/models" -H "Authorization: Bearer $VANE_KEY"
 
 curl "$BASE_URL/v1/chat/completions" \
-  -H "Authorization: Bearer $TOKEN2API_KEY" \
+  -H "Authorization: Bearer $VANE_KEY" \
   -H 'Content-Type: application/json' \
   -H "Idempotency-Key: $REQUEST_KEY" \
   -d '{"model":"platform-model-id","messages":[{"role":"user","content":"Hello"}],"max_tokens":512}'
@@ -82,13 +82,13 @@ curl "$BASE_URL/v1/chat/completions" \
 
 每次调用先固定可用上游和两份报价，再从预付余额确认最大费用预留，之后才执行推理。因此开始输出前包含真实的链上准备时间。平台选择已上架、在线、有并发且报价不高于用户报价的路由；不保证固定供应商。受理后不会因失败切换上游重放请求。
 
-JSON 响应的 `token2api.cost` 使用 `token2api.unit`。提示词限文本、最多 20 条，序列化后最多 24000 UTF-8 字节；输出上限 128–2048 Token。SSE 出错可在 HTTP 200 后返回错误帧。客户端断开不证明上游停止或免费。
+JSON 响应的 `vane.cost` 使用 `vane.unit`。提示词限文本、最多 20 条，序列化后最多 24000 UTF-8 字节；输出上限 128–2048 Token。SSE 出错可在 HTTP 200 后返回错误帧。客户端断开不证明上游停止或免费。
 
 ## 核账与 REVIEW
 
 ```bash
 curl "$BASE_URL/api/v1/requests/lookup?idempotency_key=$REQUEST_KEY" \
-  -H "Authorization: Bearer $TOKEN2API_KEY"
+  -H "Authorization: Bearer $VANE_KEY"
 
 curl -b "$COOKIE_JAR" "$BASE_URL/api/v1/consumer/requests?limit=20"
 curl -b "$COOKIE_JAR" "$BASE_URL/api/v1/consumer/settlements?limit=20"

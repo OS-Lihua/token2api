@@ -1,4 +1,4 @@
-import { token2apiRouter } from "~/server/api/routers/token2api";
+import { vaneRouter } from "~/server/api/routers/vane";
 import { createTRPCRouter } from "~/server/api/trpc";
 
 /**
@@ -7,7 +7,7 @@ import { createTRPCRouter } from "~/server/api/trpc";
  * All routers added in /api/routers should be manually added here.
  */
 export const appRouter = createTRPCRouter({
-	token2api: token2apiRouter,
+	vane: vaneRouter,
 });
 
 // export type definition of API

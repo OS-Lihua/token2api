@@ -6,7 +6,7 @@ import {
 	listingUpdateInput,
 	openSessionInput,
 	sessionIdSchema,
-} from "~/server/services/token2api.schema";
+} from "~/server/services/vane.schema";
 import {
 	keyModels,
 	modelProductResponse,
@@ -36,7 +36,7 @@ export function registerCommerce(
 	registry.registerComponent("securitySchemes", "walletSession", {
 		type: "apiKey",
 		in: "cookie",
-		name: "token2api_session",
+		name: "vane_session",
 		description:
 			"Eight-hour wallet sign-in session. Never use an inference API key for management. Browser POST origins must match APP_ORIGIN; CLI clients may omit Origin.",
 	});

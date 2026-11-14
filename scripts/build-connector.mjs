@@ -101,11 +101,11 @@ export async function buildConnector() {
 		);
 	const archive = path.join(
 		downloads,
-		`token2api-connector-${manifest.version}.tgz`,
+		`vane-connector-${manifest.version}.tgz`,
 	);
 	for (const name of await readdir(downloads)) {
 		if (
-			/^token2api-connector-\d+\.\d+\.\d+\.tgz$/.test(name) &&
+			/^vane-connector-\d+\.\d+\.\d+\.tgz$/.test(name) &&
 			path.join(downloads, name) !== archive
 		)
 			await rm(path.join(downloads, name));

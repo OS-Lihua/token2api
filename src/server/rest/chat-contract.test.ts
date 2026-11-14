@@ -7,7 +7,7 @@ import {
 	MAX_RAW_BODY_BYTES,
 	modelListResponseSchema,
 	streamChunkResponseSchema,
-} from "~/server/services/token2api.contract";
+} from "~/server/services/vane.contract";
 import { chatPost, modelsGet } from "./chat";
 
 const mocks = vi.hoisted(() => ({

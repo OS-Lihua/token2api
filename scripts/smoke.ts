@@ -95,7 +95,7 @@ async function trpc<T extends z.ZodTypeAny>(
 	schema: T,
 	mutation = true,
 ): Promise<z.infer<T>> {
-	const url = new URL(`/api/trpc/token2api.${name}`, origin);
+	const url = new URL(`/api/trpc/vane.${name}`, origin);
 	if (!mutation) url.searchParams.set("input", JSON.stringify({ json: input }));
 	const response = await fetch(url, {
 		method: mutation ? "POST" : "GET",
@@ -110,7 +110,7 @@ async function trpc<T extends z.ZodTypeAny>(
 	});
 	for (const value of response.headers.getSetCookie()) {
 		const pair = value.split(";", 1)[0];
-		if (pair?.startsWith("token2api_session=")) cookie = pair;
+		if (pair?.startsWith("vane_session=")) cookie = pair;
 	}
 	check(response.ok, `tRPC ${name} returned HTTP ${response.status}.`);
 	const payload: unknown = await response.json();
@@ -144,8 +144,8 @@ function lease(value: Snapshot, id: string) {
 
 async function main() {
 	check(
-		!process.env.TOKEN2API_MODE || process.env.TOKEN2API_MODE === "local",
-		"TOKEN2API_MODE must be local for this smoke script.",
+		!process.env.VANE_MODE || process.env.VANE_MODE === "local",
+		"VANE_MODE must be local for this smoke script.",
 	);
 	localOnly(await snapshot());
 	pass("target is loopback app + ready local demo chain");
@@ -225,7 +225,7 @@ async function main() {
 	);
 	const metadata = z
 		.object({
-			token2api: z.object({
+			vane: z.object({
 				request_id: z.string(),
 				usage_source: z.literal("demo"),
 				cost: integer.positive(),
@@ -238,7 +238,7 @@ async function main() {
 	);
 	check(
 		sessionRequests.length === 1 &&
-			sessionRequests[0]?.id === metadata.token2api.request_id,
+			sessionRequests[0]?.id === metadata.vane.request_id,
 		"Non-stream request did not create exactly one matching bill.",
 	);
 	let duplicateStatus: number | undefined;
@@ -266,7 +266,7 @@ async function main() {
 		"Replaying a request changed the charge.",
 	);
 	pass(
-		`non-stream usage + replay protection; request ${metadata.token2api.request_id}`,
+		`non-stream usage + replay protection; request ${metadata.vane.request_id}`,
 	);
 
 	step = "stream chat and final usage";

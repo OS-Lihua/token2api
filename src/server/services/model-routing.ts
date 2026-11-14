@@ -4,7 +4,7 @@ import { keccak256, stringToHex } from "viem";
 import type { z } from "zod";
 import { db } from "~/server/db";
 import { assetOf, decimalsOf } from "~/shared/settlement-asset";
-import type { Viewer } from "~/shared/token2api";
+import type { Viewer } from "~/shared/vane";
 import { AppError } from "./auth";
 import {
 	clients,
@@ -19,7 +19,7 @@ import { ledgerAmount } from "./ledger";
 import { lock } from "./market";
 import { calculateCost, runChat } from "./metering";
 import { ensureChainBinding } from "./runtime";
-import type { chatInput } from "./token2api.schema";
+import type { chatInput } from "./vane.schema";
 
 export type ModelChatArgs = Omit<z.infer<typeof chatInput>, "sessionId"> & {
 	keyId: string;

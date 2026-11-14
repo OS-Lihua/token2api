@@ -127,25 +127,25 @@ export function readEscrowPaused(): Promise<boolean> {
 	return value;
 }
 type ChainGlobal = typeof globalThis & {
-	token2apiChainQueue?: Promise<unknown>;
+	vaneChainQueue?: Promise<unknown>;
 };
 async function serializedChain<T>(
 	action: (tx: Prisma.TransactionClient) => Promise<T>,
 ): Promise<T> {
 	const global = globalThis as ChainGlobal;
-	const previous = global.token2apiChainQueue || Promise.resolve();
+	const previous = global.vaneChainQueue || Promise.resolve();
 	const result = previous
 		.catch(() => undefined)
 		.then(() =>
 			db.$transaction(
 				async (tx) => {
-					await tx.$queryRaw`SELECT 1 FROM pg_advisory_xact_lock(hashtext(${"token2api:chain-signer"}))`;
+					await tx.$queryRaw`SELECT 1 FROM pg_advisory_xact_lock(hashtext(${"vane:chain-signer"}))`;
 					return action(tx);
 				},
 				{ timeout: 120_000, maxWait: 30_000 },
 			),
 		);
-	global.token2apiChainQueue = result.catch(() => undefined);
+	global.vaneChainQueue = result.catch(() => undefined);
 	return result;
 }
 

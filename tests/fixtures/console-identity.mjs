@@ -96,7 +96,7 @@ const confirmation = new Promise((resolve) => {
 });
 const snapshot = { data, refetch: async () => ({ data }) };
 const api = {
-	token2api: new Proxy(
+	vane: new Proxy(
 		{},
 		{
 			get(_target, name) {
@@ -151,7 +151,7 @@ const modules = {
 	},
 	"~/app/_components/console/ui": { Badge: placeholder },
 	"~/app/_components/wallet-provider": {
-		useToken2ApiWallet: () => ({
+		useVaneWallet: () => ({
 			address: currentWallet,
 			isConnected: true,
 			getWallet: async () => ({}),
@@ -212,9 +212,7 @@ modules["~/app/_components/console/routes"] = loadSource(
 modules["~/shared/model-routing"] = loadSource("src/shared/model-routing.ts");
 const pageContent = loadSource("src/app/_components/console/page-content.tsx");
 modules["~/app/_components/console/page-content"] = pageContent;
-const root = loadSource(
-	"src/app/_components/token2api-console.tsx",
-).Token2ApiConsole;
+const root = loadSource("src/app/_components/vane-console.tsx").VaneConsole;
 const childOutlet = { type: "outlet" };
 function render() {
 	let tree;

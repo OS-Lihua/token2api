@@ -7,7 +7,7 @@ export const previewLink: TRPCLink<AppRouter> =
 	() =>
 	({ op }) =>
 		observable((observer) => {
-			if (op.type === "query" && op.path === "token2api.snapshot") {
+			if (op.type === "query" && op.path === "vane.snapshot") {
 				observer.next({ result: { data: previewSnapshot } });
 				observer.complete();
 			} else {

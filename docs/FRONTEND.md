@@ -1,6 +1,6 @@
 # 前端界面与交互
 
-Token2API 使用 Next.js、React、TypeScript、Tailwind CSS、Lucide 与现有 Radix 下拉组件。Web 内部操作沿用 tRPC 和 TanStack Query。没有新增依赖。模型 Key 与预付账户复用共享服务，钱包签名与权限检查保持不变；资金规则见 [MODEL_ROUTING.md](./MODEL_ROUTING.md)。
+Vane 使用 Next.js、React、TypeScript、Tailwind CSS、Lucide 与现有 Radix 下拉组件。Web 内部操作沿用 tRPC 和 TanStack Query。没有新增依赖。模型 Key 与预付账户复用共享服务，钱包签名与权限检查保持不变；资金规则见 [MODEL_ROUTING.md](./MODEL_ROUTING.md)。
 
 ## 视觉与组件
 

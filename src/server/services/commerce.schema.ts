@@ -1,12 +1,12 @@
 import { z } from "zod";
 import { modelId, modelKeyInput } from "~/shared/model-routing";
 import { SETTLEMENT_ASSETS } from "~/shared/settlement-asset";
-import { codePointString } from "./token2api.contract";
+import { codePointString } from "./vane.contract";
 import {
 	addressSchema,
 	sessionIdSchema,
 	walletSignatureSchema,
-} from "./token2api.schema";
+} from "./vane.schema";
 
 export const pageQuery = z
 	.object({

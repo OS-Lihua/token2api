@@ -4,7 +4,7 @@ import {
 	OpenApiGeneratorV31,
 } from "@asteasolutions/zod-to-openapi";
 import { z } from "zod";
-import { listingUpdateInput } from "~/server/services/token2api.schema";
+import { listingUpdateInput } from "~/server/services/vane.schema";
 import {
 	endpointUrl,
 	proxyAuthenticationAllowed,
@@ -215,7 +215,7 @@ export function schemaDocument() {
 	);
 	const doc = new OpenApiGeneratorV31(registry.definitions).generateDocument({
 		openapi: "3.1.0",
-		info: { title: "Token2API CLI", version: "1" },
+		info: { title: "Vane CLI", version: "1" },
 	});
 	return {
 		commands: commands.map((entry) => ({

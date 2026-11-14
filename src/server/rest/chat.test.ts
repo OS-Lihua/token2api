@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { AppError } from "~/server/services/auth";
-import { completionResponseSchema } from "~/server/services/token2api.contract";
+import { completionResponseSchema } from "~/server/services/vane.contract";
 import { chatPost } from "./chat";
 
 const mocks = vi.hoisted(() => ({
@@ -81,11 +81,11 @@ beforeEach(() => {
 });
 
 describe("REST chat finish reasons", () => {
-	it("returns Token2API billing metadata", async () => {
+	it("returns Vane billing metadata", async () => {
 		mocks.runChat.mockResolvedValue(result("stop"));
 		const response = await chatPost(request(false));
 		const body = completionResponseSchema.parse(await response.json());
-		expect(body.token2api).toEqual({
+		expect(body.vane).toEqual({
 			request_id: "request-123",
 			cost: 1,
 			unit: "micro_USDC",

@@ -10,7 +10,7 @@ process.on("SIGTERM", () => {
 process.on("SIGINT", () => {
 	stopping = true;
 });
-console.log("Token2API settlement worker: every 10 seconds.");
+console.log("Vane settlement worker: every 10 seconds.");
 while (!stopping) {
 	try {
 		await recoverPrepaidReservations();

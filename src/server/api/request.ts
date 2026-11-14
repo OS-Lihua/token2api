@@ -2,7 +2,7 @@ import "server-only";
 import { TRPC_ERROR_CODES_BY_KEY } from "@trpc/server/rpc";
 import superjson from "superjson";
 import { BodyReadError, readRequestText } from "~/server/security/request-body";
-import { MAX_RAW_BODY_BYTES } from "~/server/services/token2api.contract";
+import { MAX_RAW_BODY_BYTES } from "~/server/services/vane.contract";
 import { MAX_TRPC_BATCH_SIZE } from "~/shared/trpc-limits";
 
 function denied(status: 400 | 408 | 413, message: string) {

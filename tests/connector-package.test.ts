@@ -155,7 +155,7 @@ async function listen() {
 }
 
 beforeAll(async () => {
-	emptyDir = await fs.mkdtemp(path.join(os.tmpdir(), "token2api-package-"));
+	emptyDir = await fs.mkdtemp(path.join(os.tmpdir(), "vane-package-"));
 	archive = await buildConnector();
 	complete = new Promise<void>((resolve) => {
 		receivedComplete = resolve;
@@ -201,7 +201,7 @@ describe("standalone connector distribution", () => {
 				error: {
 					code: "manual_input_required",
 					manualCommand: [
-						"token2api",
+						"vane",
 						"auth",
 						"login",
 						"--platform",
@@ -244,12 +244,12 @@ describe("standalone connector distribution", () => {
 					path.join(emptyDir, "cache"),
 					`--package=${origin}${connectorDownloadPath}`,
 					"--",
-					"token2api-connector",
+					"vane-connector",
 					"--help",
 				],
 				{ cwd: emptyDir, timeout: 20_000 },
 			);
-			expect(stdout).toContain("token2api-connector start");
+			expect(stdout).toContain("vane-connector start");
 			expect(stdout).not.toContain("pnpm connector");
 			const cli = await exec(
 				"npm",
@@ -260,7 +260,7 @@ describe("standalone connector distribution", () => {
 					path.join(emptyDir, "cache"),
 					`--package=${origin}${connectorDownloadPath}`,
 					"--",
-					"token2api",
+					"vane",
 					"schema",
 				],
 				{ cwd: emptyDir, timeout: 20_000 },
@@ -315,7 +315,7 @@ describe("standalone connector distribution", () => {
 		const bin = path.join(
 			install,
 			"node_modules",
-			"@token2api",
+			"@vane",
 			"connector",
 			"dist",
 			"connector.mjs",
@@ -331,7 +331,7 @@ describe("standalone connector distribution", () => {
 			[bin, "status", "--platform", platform],
 			{
 				cwd: emptyDir,
-				env: { ...process.env, TOKEN2API_CONNECTOR_TOKEN: token },
+				env: { ...process.env, VANE_CONNECTOR_TOKEN: token },
 			},
 		);
 		expect(JSON.parse(status)).toMatchObject({
@@ -356,8 +356,8 @@ describe("standalone connector distribution", () => {
 				stdio: "pipe",
 				env: {
 					...process.env,
-					TOKEN2API_CONNECTOR_TOKEN: "",
-					TOKEN2API_UPSTREAM_KEY: apiKey,
+					VANE_CONNECTOR_TOKEN: "",
+					VANE_UPSTREAM_KEY: apiKey,
 				},
 			},
 		);

@@ -10,12 +10,12 @@ import {
 	completionResponseSchema,
 	modelListResponseSchema,
 	streamChunkResponseSchema,
-} from "~/server/services/token2api.contract";
+} from "~/server/services/vane.contract";
 import {
 	listingInput,
 	listingUpdateInput,
 	publicChatInput,
-} from "~/server/services/token2api.schema";
+} from "~/server/services/vane.schema";
 import { openApiDocument } from "./document";
 
 // OpenAPI stores reusable schemas in components instead of $defs. Ajv resolves
@@ -51,7 +51,7 @@ function expectInputAgreement(input: unknown, valid: boolean) {
 	);
 }
 
-describe("Token2API OpenAPI", () => {
+describe("Vane OpenAPI", () => {
 	it("documents optional proxy input without exposing proxy configuration in resource responses", () => {
 		const validate = contract("CreateResource");
 		const input = {
@@ -106,7 +106,7 @@ describe("Token2API OpenAPI", () => {
 		).toMatchObject({
 			type: "apiKey",
 			in: "cookie",
-			name: "token2api_session",
+			name: "vane_session",
 		});
 	});
 	it("rejects empty edits, fractional prices and connector replacement in runtime and OpenAPI", () => {
@@ -417,7 +417,7 @@ describe("Token2API OpenAPI", () => {
 				},
 			],
 			usage: { prompt_tokens: 3, completion_tokens: 2, total_tokens: 5 },
-			token2api: {
+			vane: {
 				request_id: "request-test",
 				cost: 1,
 				unit: "micro_USDC",

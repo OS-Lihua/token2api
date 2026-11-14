@@ -22,17 +22,17 @@ import {
 	QueryError,
 } from "~/app/_components/console/ui";
 import { ConsoleSelect } from "~/app/_components/console-select";
-import { useToken2ApiWallet } from "~/app/_components/wallet-provider";
+import { useVaneWallet } from "~/app/_components/wallet-provider";
 import { endpointPolicyInput } from "~/shared/gateway-config";
 import { uiPreview } from "~/shared/ui-preview";
 import { api } from "~/trpc/react";
 import { ModelRoutingAdmin } from "./model-routing-admin";
 
-export function Token2ApiAdmin() {
-	const { address, isConnected } = useToken2ApiWallet();
-	const snapshot = api.token2api.snapshot.useQuery({ gatewayOnly: true });
+export function VaneAdmin() {
+	const { address, isConnected } = useVaneWallet();
+	const snapshot = api.vane.snapshot.useQuery({ gatewayOnly: true });
 	const viewer = snapshot.data?.viewer;
-	const status = api.token2api.operatorStatus.useQuery(undefined, {
+	const status = api.vane.operatorStatus.useQuery(undefined, {
 		enabled: !uiPreview,
 		retry: false,
 		refetchInterval: 10_000,
@@ -53,7 +53,7 @@ export function Token2ApiAdmin() {
 		<div className="admin-shell">
 			<header className="topbar">
 				<div className="admin-navigation">
-					<Link aria-label="Token2API 首页" href="/">
+					<Link aria-label="Vane 首页" href="/">
 						<BrandLogo />
 					</Link>
 					<a className="text-link" href="/console">
@@ -73,7 +73,7 @@ export function Token2ApiAdmin() {
 			<main className="content">
 				<div className="page-heading">
 					<div>
-						<span className="workspace-caption">TOKEN2API · 管理后台</span>
+						<span className="workspace-caption">VANE · 管理后台</span>
 						<h1>平台管理</h1>
 						<p className="workspace-description">
 							配置模型报价与上游路由，审核接入地址和关联资源。
@@ -138,7 +138,7 @@ export function Token2ApiAdmin() {
 }
 
 function EndpointManager() {
-	const policies = api.token2api.endpointPolicies.useQuery(undefined, {
+	const policies = api.vane.endpointPolicies.useQuery(undefined, {
 		retry: false,
 		refetchInterval: 15_000,
 	});
@@ -147,12 +147,12 @@ function EndpointManager() {
 	const [cursorHistory, setCursorHistory] = useState<(string | undefined)[]>(
 		[],
 	);
-	const resources = api.token2api.operatorResources.useQuery(
+	const resources = api.vane.operatorResources.useQuery(
 		{ endpointId, cursor, limit: 25 },
 		{ retry: false },
 	);
-	const save = api.token2api.saveEndpointPolicy.useMutation();
-	const toggle = api.token2api.setEndpointStatus.useMutation();
+	const save = api.vane.saveEndpointPolicy.useMutation();
+	const toggle = api.vane.setEndpointStatus.useMutation();
 	const [kind, setKind] = useState<"GATEWAY" | "PROXY">("GATEWAY");
 	const [url, setUrl] = useState("");
 	const [name, setName] = useState("");

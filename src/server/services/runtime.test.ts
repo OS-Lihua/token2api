@@ -34,18 +34,18 @@ afterEach(() => {
 
 describe("demo identity chain boundary", () => {
 	it("defaults the data directory to Base USDC and rejects implicit local deployments", () => {
-		vi.stubEnv("TOKEN2API_MODE", "");
-		vi.stubEnv("TOKEN2API_DATA_DIR", "");
+		vi.stubEnv("VANE_MODE", "");
+		vi.stubEnv("VANE_DATA_DIR", "");
 		vi.stubEnv("SETTLEMENT_CHAIN_ID", "");
 		vi.stubEnv("SETTLEMENT_ASSET", "");
 		vi.stubEnv("CHAIN_CONFIG_JSON", config("evm"));
 		expect(chainConfig().chainId).toBe(1);
 		expect(runtimeDirectory()).toMatch(/\.runtime\/evm\/8453-usdc$/);
 		vi.stubEnv("CHAIN_CONFIG_JSON", config("local"));
-		expect(() => chainConfig()).toThrow("TOKEN2API_MODE does not match");
+		expect(() => chainConfig()).toThrow("VANE_MODE does not match");
 	});
 	it("rejects an unlisted settlement chain", () => {
-		vi.stubEnv("TOKEN2API_MODE", "evm");
+		vi.stubEnv("VANE_MODE", "evm");
 		vi.stubEnv(
 			"CHAIN_CONFIG_JSON",
 			JSON.stringify({ ...JSON.parse(config("evm")), chainId: 143 }),
@@ -54,29 +54,29 @@ describe("demo identity chain boundary", () => {
 	});
 	it("enables the public demo only for a matching loopback deployment", () => {
 		vi.stubEnv("ALLOW_DEMO", "true");
-		vi.stubEnv("TOKEN2API_MODE", "local");
+		vi.stubEnv("VANE_MODE", "local");
 		vi.stubEnv("CHAIN_CONFIG_JSON", config("local"));
 		expect(demoEnabled()).toBe(true);
 	});
 
 	it("rejects an environment mode that disagrees with the deployed network", () => {
 		vi.stubEnv("ALLOW_DEMO", "true");
-		vi.stubEnv("TOKEN2API_MODE", "local");
+		vi.stubEnv("VANE_MODE", "local");
 		vi.stubEnv("CHAIN_CONFIG_JSON", config("evm"));
-		expect(() => chainConfig()).toThrow("TOKEN2API_MODE does not match");
-		expect(() => demoEnabled()).toThrow("TOKEN2API_MODE does not match");
+		expect(() => chainConfig()).toThrow("VANE_MODE does not match");
+		expect(() => demoEnabled()).toThrow("VANE_MODE does not match");
 	});
 
 	it("never enables demo identities on remote networks even when ALLOW_DEMO is true", () => {
 		vi.stubEnv("ALLOW_DEMO", "true");
-		vi.stubEnv("TOKEN2API_MODE", "evm");
+		vi.stubEnv("VANE_MODE", "evm");
 		vi.stubEnv("CHAIN_CONFIG_JSON", config("evm"));
 		expect(demoEnabled()).toBe(false);
 	});
 });
 
 it("requires explicit native token metadata without reinterpreting old configs", () => {
-	vi.stubEnv("TOKEN2API_MODE", "evm");
+	vi.stubEnv("VANE_MODE", "evm");
 	const {
 		asset: _asset,
 		tokenDecimals: _decimals,
@@ -102,7 +102,7 @@ it("requires explicit native token metadata without reinterpreting old configs",
 
 describe("persistent settlement binding", () => {
 	it("stores stablecoin precision with the deployment identity", async () => {
-		vi.stubEnv("TOKEN2API_MODE", "evm");
+		vi.stubEnv("VANE_MODE", "evm");
 		const configured = {
 			...JSON.parse(config("evm")),
 			chainId: 56,
@@ -128,7 +128,7 @@ describe("persistent settlement binding", () => {
 		);
 	});
 	it("verifies the binding once per process and retries after a failure", async () => {
-		vi.stubEnv("TOKEN2API_MODE", "evm");
+		vi.stubEnv("VANE_MODE", "evm");
 		const configured = JSON.parse(config("evm"));
 		vi.stubEnv("CHAIN_CONFIG_JSON", JSON.stringify(configured));
 		bindingStore.upsert.mockReset();
@@ -144,7 +144,7 @@ describe("persistent settlement binding", () => {
 	it.each(["chainId", "asset", "tokenDecimals", "token", "escrow"])(
 		"refuses to reinterpret an existing ledger with different %s",
 		async (field) => {
-			vi.stubEnv("TOKEN2API_MODE", "evm");
+			vi.stubEnv("VANE_MODE", "evm");
 			const configured = {
 				...JSON.parse(config("evm")),
 				chainId: 56,

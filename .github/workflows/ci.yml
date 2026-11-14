@@ -22,21 +22,21 @@ jobs:
       postgres:
         image: postgres:16
         env:
-          POSTGRES_DB: token2api_ci
+          POSTGRES_DB: vane_ci
           POSTGRES_PASSWORD: local_ci_only
           POSTGRES_USER: postgres
         ports: ["5432:5432"]
         options: >-
-          --health-cmd "pg_isready -U postgres -d token2api_ci"
+          --health-cmd "pg_isready -U postgres -d vane_ci"
           --health-interval 10s --health-timeout 5s --health-retries 5
     env:
-      DATABASE_URL: postgresql://postgres:local_ci_only@127.0.0.1:5432/token2api_ci
+      DATABASE_URL: postgresql://postgres:local_ci_only@127.0.0.1:5432/vane_ci
       APP_ENV: test
-      TOKEN2API_MODE: local
+      VANE_MODE: local
       ALLOW_DEMO: "true"
       APP_ORIGIN: http://localhost:3000
       SESSION_PASSWORD: local-ci-only-not-a-deployment-secret-000000000000
-      TOKEN2API_DATA_DIR: .runtime/ci
+      VANE_DATA_DIR: .runtime/ci
       LOG_LEVEL: warn
       RATE_LIMIT_REQUESTS: "1000"
       VITEST_MAX_WORKERS: "2"
@@ -67,7 +67,7 @@ jobs:
       - name: Test production HTTP and ledger recovery on local EVM
         shell: bash
         run: |
-          pnpm preview:local > "$RUNNER_TEMP/token2api-preview.log" 2>&1 &
+          pnpm preview:local > "$RUNNER_TEMP/vane-preview.log" 2>&1 &
           preview_pid=$!
           trap 'kill "$preview_pid" 2>/dev/null || true' EXIT
           ready=false
@@ -79,17 +79,17 @@ jobs:
             sleep 1
           done
           if [ "$ready" != true ]; then
-            cat "$RUNNER_TEMP/token2api-preview.log"
+            cat "$RUNNER_TEMP/vane-preview.log"
             exit 1
           fi
           pnpm test:e2e
           pnpm test:api
-          TOKEN2API_RECOVERY_TEST=true pnpm test:recovery
+          VANE_RECOVERY_TEST=true pnpm test:recovery
       - name: Show local server logs after a failure
         if: failure()
         run: |
-          if [ -f "$RUNNER_TEMP/token2api-preview.log" ]; then
-            cat "$RUNNER_TEMP/token2api-preview.log"
+          if [ -f "$RUNNER_TEMP/vane-preview.log" ]; then
+            cat "$RUNNER_TEMP/vane-preview.log"
           fi
 
   deploy:
@@ -99,7 +99,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     concurrency:
-      group: token2api-production
+      group: vane-production
       cancel-in-progress: false
     environment:
       name: production

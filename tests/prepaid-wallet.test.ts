@@ -7,7 +7,7 @@ import {
 import { tokenAbi } from "~/lib/abi";
 import { prepaidAbi } from "~/lib/prepaid-abi";
 import { NATIVE_TOKEN, toChainAmount } from "~/shared/settlement-asset";
-import type { NetworkInfo } from "~/shared/token2api";
+import type { NetworkInfo } from "~/shared/vane";
 
 const address = "0x1111111111111111111111111111111111111111";
 const escrow = "0x2222222222222222222222222222222222222222";

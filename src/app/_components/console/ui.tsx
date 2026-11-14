@@ -9,7 +9,7 @@ import {
 	X,
 } from "lucide-react";
 import { type ReactNode, useEffect, useId, useRef } from "react";
-import type { ListingView, NetworkInfo } from "~/shared/token2api";
+import type { ListingView, NetworkInfo } from "~/shared/vane";
 import { listingStatus, short, type Tone } from "./format";
 
 export function Badge({

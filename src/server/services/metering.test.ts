@@ -6,7 +6,7 @@ import {
 	messagesSchema,
 	openSessionInput,
 	publicChatInput,
-} from "./token2api.schema";
+} from "./vane.schema";
 
 // Cost/schema tests must not create a Prisma connection or require PostgreSQL.
 vi.mock("~/server/db", () => ({ db: {} }));

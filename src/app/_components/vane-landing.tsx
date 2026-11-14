@@ -32,7 +32,7 @@ import { SETTLEMENT_CHAINS } from "~/shared/network";
 import { AssetGlyph } from "./asset-glyph";
 import { BrandLogo } from "./brand-logo";
 import { ChainGlyph, chainColor, chainLabel } from "./chain-glyph";
-import styles from "./token2api-landing.module.css";
+import styles from "./vane-landing.module.css";
 
 const repository = "https://github.com/OS-Lihua/token2api";
 const snippets = {
@@ -40,15 +40,15 @@ const snippets = {
 import { randomUUID } from "node:crypto";
 
 const client = new OpenAI({
-  apiKey: process.env.TOKEN2API_KEY,
-  baseURL: process.env.TOKEN2API_BASE_URL,
+  apiKey: process.env.VANE_KEY,
+  baseURL: process.env.VANE_BASE_URL,
   maxRetries: 0,
 });
 
 const response = await client.chat.completions.create(
   {
-    model: process.env.TOKEN2API_MODEL!,
-    messages: [{ role: "user", content: "Hello, Token2API." }],
+    model: process.env.VANE_MODEL!,
+    messages: [{ role: "user", content: "Hello, Vane." }],
     max_tokens: 512,
   },
   { headers: { "Idempotency-Key": randomUUID() } },
@@ -58,14 +58,14 @@ from uuid import uuid4
 from openai import OpenAI
 
 client = OpenAI(
-    api_key=os.environ["TOKEN2API_KEY"],
-    base_url=os.environ["TOKEN2API_BASE_URL"],
+    api_key=os.environ["VANE_KEY"],
+    base_url=os.environ["VANE_BASE_URL"],
     max_retries=0,
 )
 
 response = client.chat.completions.create(
-    model=os.environ["TOKEN2API_MODEL"],
-    messages=[{"role": "user", "content": "Hello, Token2API."}],
+    model=os.environ["VANE_MODEL"],
+    messages=[{"role": "user", "content": "Hello, Vane."}],
     max_tokens=512,
     extra_headers={"Idempotency-Key": str(uuid4())},
 )`,
@@ -103,7 +103,7 @@ function SpotlightCard({
 
 function Brand() {
 	return (
-		<Link aria-label="Token2API 首页" className={styles.brand} href="/">
+		<Link aria-label="Vane 首页" className={styles.brand} href="/">
 			<BrandLogo className={styles.brandLogo} />
 		</Link>
 	);
@@ -114,7 +114,7 @@ function NetworkDiagram() {
 		<div aria-hidden="true" className={styles.networkDiagram}>
 			<div className={styles.diagramHeading}>
 				<span>多链结算网络</span>
-				<span>Token2API</span>
+				<span>Vane</span>
 			</div>
 			<svg
 				aria-hidden="true"
@@ -159,7 +159,7 @@ function NetworkDiagram() {
 			))}
 			<div className={styles.settlementHub}>
 				<Image alt="" height={44} src="/icon.svg" width={44} />
-				<strong>Token2API</strong>
+				<strong>Vane</strong>
 				<span>统一余额 · 按量结算</span>
 			</div>
 			<div className={styles.settlementAssets}>
@@ -182,14 +182,14 @@ function NetworkDiagram() {
 
 const faqs = [
 	{
-		question: "Token2API 是什么？",
+		question: "Vane 是什么？",
 		answer:
-			"Token2API 是面向 AI 资源交易的多链结算平台。调用者创建 Key、授权模型并充值，通过统一 API 调用；平台选择上游，按统一模型报价计费。提供者接入自己的网关或 pool connector，按已确认用量收款。",
+			"Vane 是面向 AI 资源交易的多链结算平台。调用者创建 Key、授权模型并充值，通过统一 API 调用；平台选择上游，按统一模型报价计费。提供者接入自己的网关或 pool connector，按已确认用量收款。",
 	},
 	{
 		question: "可以使用现有的 OpenAI SDK 吗？",
 		answer:
-			"可以。Token2API 提供兼容 OpenAI 的文本 Chat Completions 接口，支持普通响应和流式响应。将 baseURL 改为部署地址的 /v1，并使用已授权对应模型的平台 API Key。每次新调用需要唯一的 Idempotency-Key；重试同一次调用时复用原键。",
+			"可以。Vane 提供兼容 OpenAI 的文本 Chat Completions 接口，支持普通响应和流式响应。将 baseURL 改为部署地址的 /v1，并使用已授权对应模型的平台 API Key。每次新调用需要唯一的 Idempotency-Key；重试同一次调用时复用原键。",
 	},
 	{
 		question: "如何控制调用费用？",
@@ -214,7 +214,7 @@ const faqs = [
 ];
 const languages: (keyof typeof snippets)[] = ["TypeScript", "Python"];
 
-export function Token2ApiLanding() {
+export function VaneLanding() {
 	const [menuOpen, setMenuOpen] = useState(false);
 	const [language, setLanguage] = useState<keyof typeof snippets>("TypeScript");
 	const [copyStatus, setCopyStatus] = useState("");
@@ -787,7 +787,7 @@ export function Token2ApiLanding() {
 						</a>
 					</div>
 					<div className={styles.footerBottom}>
-						<span>© {new Date().getFullYear()} Token2API</span>
+						<span>© {new Date().getFullYear()} Vane</span>
 
 						<a href="#main">回到顶部 ↑</a>
 					</div>

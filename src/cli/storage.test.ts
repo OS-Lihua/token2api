@@ -19,7 +19,7 @@ afterEach(async () => {
 	);
 });
 async function temporary() {
-	const directory = await mkdtemp(path.join(tmpdir(), "token2api-cli-"));
+	const directory = await mkdtemp(path.join(tmpdir(), "vane-cli-"));
 	directories.push(directory);
 	return directory;
 }
@@ -77,7 +77,7 @@ describe("local CLI secret storage", () => {
 		await writePrivate(store.file("session.json"), {
 			platform: "https://platform.example",
 			address: `0x${"11".repeat(20)}`,
-			cookie: "token2api_session=private-cookie",
+			cookie: "vane_session=private-cookie",
 			expiresAt: Date.now() + 60_000,
 		});
 		expect((await store.session("https://platform.example")).address).toBe(

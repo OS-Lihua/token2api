@@ -30,7 +30,7 @@ export const sessionSchema = z
 		address: z.string().regex(/^0x[\da-fA-F]{40}$/),
 		cookie: z
 			.string()
-			.regex(/^token2api_session=[^;\s\r\n]+$/)
+			.regex(/^vane_session=[^;\s\r\n]+$/)
 			.max(8192),
 		expiresAt: z.number().int().positive(),
 	})
@@ -192,8 +192,8 @@ export class CliStore {
 			);
 		this.directory = path.resolve(
 			directory ||
-				process.env.TOKEN2API_CONFIG_DIR ||
-				path.join(homedir(), ".config", "token2api"),
+				process.env.VANE_CONFIG_DIR ||
+				path.join(homedir(), ".config", "vane"),
 			profile,
 		);
 	}

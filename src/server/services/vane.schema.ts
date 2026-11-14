@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { proxyInput } from "~/shared/gateway-config";
-import { codePointString, MAX_MESSAGES_BYTES } from "./token2api.contract";
+import { codePointString, MAX_MESSAGES_BYTES } from "./vane.contract";
 export const addressSchema = z.string().regex(/^0x[\da-fA-F]{40}$/);
 export const sessionIdSchema = z.string().regex(/^0x[\da-fA-F]{64}$/);
 export const walletSignatureSchema = z

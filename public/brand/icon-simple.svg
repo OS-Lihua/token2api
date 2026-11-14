@@ -1,0 +1,17 @@
+<svg
+	height="48"
+	viewBox="0 0 48 48"
+	width="48"
+	xmlns="http://www.w3.org/2000/svg"
+>
+	<title>Vane</title>
+	<rect fill="#D1F344" height="48" rx="10" width="48" />
+	<g
+		fill="#171C13"
+		transform="translate(9.2 9.2) scale(0.3947) translate(-12 -12)"
+	>
+		<path
+			d="M12.00 12.00 L34.00 12.00 L50.00 63.00 L66.00 12.00 L88.00 12.00 L50.00 88.00 Z"
+		/>
+	</g>
+</svg>

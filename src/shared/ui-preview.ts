@@ -1,6 +1,6 @@
 import type { ModelView } from "./model-routing";
 import { DEFAULT_NETWORK } from "./network";
-import type { Snapshot } from "./token2api";
+import type { Snapshot } from "./vane";
 
 export const uiPreview =
 	process.env.NODE_ENV === "development" &&
@@ -8,14 +8,14 @@ export const uiPreview =
 const owner = "0x0000000000000000000000000000000000000001";
 export const previewModels: ModelView[] = [
 	{
-		id: "token2api-demo",
+		id: "vane-demo",
 		name: "通用对话（预览）",
 		inputRate: 3_000_000,
 		outputRate: 15_000_000,
 		available: true,
 	},
 	{
-		id: "token2api-reasoning-demo",
+		id: "vane-reasoning-demo",
 		name: "推理对话（预览）",
 		inputRate: 4_000_000,
 		outputRate: 18_000_000,
@@ -49,7 +49,7 @@ export const previewSnapshot: Snapshot = {
 			id: `ui-preview-${index}`,
 			name,
 			description: "UI 预览模拟资源 · 未连接真实服务",
-			model: "token2api-demo",
+			model: "vane-demo",
 			owner,
 			kind: "demo",
 			transport: "direct",
@@ -100,7 +100,7 @@ export const previewSnapshot: Snapshot = {
 			name: "预览应用",
 			prefix: "preview_only",
 			sessionId: null,
-			models: ["token2api-demo"],
+			models: ["vane-demo"],
 			revoked: false,
 			createdAt: "2026-10-18T00:00:00.000Z",
 		},

@@ -62,7 +62,7 @@ async function main() {
 	if (isNativeAsset(asset) && asset !== chain.nativeCurrency.symbol)
 		throw new Error("Native asset does not match the selected chain.");
 	const directory = path.resolve(
-		process.env.TOKEN2API_DATA_DIR ||
+		process.env.VANE_DATA_DIR ||
 			`.runtime/evm/${chain.id}-${asset.toLowerCase()}`,
 	);
 	const configFile = path.join(directory, "chain.json");
@@ -106,7 +106,7 @@ async function main() {
 			getAddress(existing.token) !== token
 		)
 			throw new Error(
-				"Existing deployment differs. Use a separate TOKEN2API_DATA_DIR and DATABASE_URL.",
+				"Existing deployment differs. Use a separate VANE_DATA_DIR and DATABASE_URL.",
 			);
 		const escrow = getAddress(existing.escrow);
 		const code = await client.getCode({ address: escrow });
@@ -202,7 +202,7 @@ async function main() {
 	);
 	fs.renameSync(`${configFile}.tmp`, configFile);
 	console.log(
-		`${chain.name} ${asset} deployment saved to ${configFile}. Set TOKEN2API_DATA_DIR to this directory before starting the app.`,
+		`${chain.name} ${asset} deployment saved to ${configFile}. Set VANE_DATA_DIR to this directory before starting the app.`,
 	);
 }
 main().catch((error: unknown) => {

@@ -51,7 +51,7 @@ yarn-error.log*
 # idea files
 .idea
 
-# Token2API local EVM and generated artifacts
+# Vane local EVM and generated artifacts
 .runtime/
 contracts/artifacts/
 work/

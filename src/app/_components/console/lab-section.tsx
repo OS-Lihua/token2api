@@ -14,7 +14,7 @@ import { ConsoleSelect } from "~/app/_components/console-select";
 import type { ModelView } from "~/shared/model-routing";
 import { formatAmount as usd } from "~/shared/money";
 import type { SettlementAsset } from "~/shared/settlement-asset";
-import type { KeyView } from "~/shared/token2api";
+import type { KeyView } from "~/shared/vane";
 import type { Section } from "./format";
 import { Badge, Empty, Panel } from "./ui";
 
@@ -190,7 +190,7 @@ export function LabSection({
 						>
 							<div className="prompt-suggestions">
 								{[
-									"用三句话解释 Token2API 的预算与结算。",
+									"用三句话解释 Vane 的预算与结算。",
 									"写一个简短的 TypeScript 函数示例。",
 								].map((value) => (
 									<button
@@ -214,7 +214,7 @@ export function LabSection({
 									) : (
 										<Network size={11} />
 									)}
-									{message.role === "user" ? "YOU" : "Token2API / RESPONSE"}
+									{message.role === "user" ? "YOU" : "Vane / RESPONSE"}
 								</div>
 								<p>{message.content}</p>
 								{message.meta && (

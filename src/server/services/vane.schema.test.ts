@@ -5,7 +5,7 @@ import {
 	listingInput,
 	messagesSchema,
 	publicChatInput,
-} from "./token2api.schema";
+} from "./vane.schema";
 
 const messages = [{ role: "user", content: "hello" }];
 
@@ -57,7 +57,7 @@ describe("gateway resource credentials", () => {
 	);
 });
 
-describe("Token2API Unicode input limits", () => {
+describe("Vane Unicode input limits", () => {
 	it("applies code-point limits to internal conversation and idempotency fields", () => {
 		const input = {
 			sessionId: `0x${"a".repeat(64)}`,

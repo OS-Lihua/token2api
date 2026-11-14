@@ -19,9 +19,9 @@ import { pathToFileURL } from "node:url";
  * }} options
  */
 export function startDev({ spawnChild = spawn, runtime = process } = {}) {
-	const mode = runtime.env.TOKEN2API_MODE || "evm";
+	const mode = runtime.env.VANE_MODE || "evm";
 	if (mode !== "local" && mode !== "evm")
-		throw new Error("TOKEN2API_MODE must be evm or local.");
+		throw new Error("VANE_MODE must be evm or local.");
 	/** @type {Set<import("node:child_process").ChildProcess>} */
 	const children = new Set();
 	let stopping = false;
@@ -95,7 +95,7 @@ export function startDev({ spawnChild = spawn, runtime = process } = {}) {
 	const chain = launch("chain", ["--import", "tsx", "scripts/chain.ts"], {
 		stdio: ["inherit", "pipe", "inherit"],
 	});
-	const ready = "TOKEN2API_CHAIN_READY";
+	const ready = "VANE_CHAIN_READY";
 	let buffered = "";
 	let started = false;
 	chain?.stdout?.on("data", (data) => {

@@ -3,7 +3,7 @@
 import { type FormEvent, useState } from "react";
 import type { ModelView } from "~/shared/model-routing";
 import { formatChainBalance, formatAmount as usd } from "~/shared/money";
-import type { NetworkInfo, RefundView, SessionView } from "~/shared/token2api";
+import type { NetworkInfo, RefundView, SessionView } from "~/shared/vane";
 import { remainingBudget } from "./format";
 import { ModelPicker } from "./model-picker";
 import { Modal, Transaction } from "./ui";

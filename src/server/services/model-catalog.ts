@@ -5,7 +5,7 @@ import type {
 	modelProductInput,
 	modelRouteInput,
 } from "~/shared/model-routing";
-import type { Viewer } from "~/shared/token2api";
+import type { Viewer } from "~/shared/vane";
 import { AppError } from "./auth";
 import { resourceAvailable } from "./connector-availability";
 import { requireGatewayAccess } from "./gateway-access";

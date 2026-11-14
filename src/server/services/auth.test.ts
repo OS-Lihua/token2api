@@ -148,7 +148,7 @@ describe("wallet SIWE authentication", () => {
 		expect(await viewer()).toEqual(mocks.session.viewer);
 		expect(getIronSession).toHaveBeenLastCalledWith(
 			expect.anything(),
-			expect.objectContaining({ cookieName: "token2api_session" }),
+			expect.objectContaining({ cookieName: "vane_session" }),
 		);
 		await logout();
 		expect(mocks.session.destroy).toHaveBeenCalledOnce();

@@ -4,8 +4,8 @@ import { AppError } from "~/server/services/auth";
 import {
 	BODY_READ_TIMEOUT_MS,
 	MAX_RAW_BODY_BYTES,
-} from "~/server/services/token2api.contract";
-import { publicChatInput } from "~/server/services/token2api.schema";
+} from "~/server/services/vane.contract";
+import { publicChatInput } from "~/server/services/vane.schema";
 import { createRestMutation, createRestQuery } from "./endpoint";
 
 const mocks = vi.hoisted(() => ({
@@ -526,17 +526,14 @@ describe("REST endpoint execution", () => {
 		it("limits a verified credential by subject instead of by IP", async () => {
 			const handler = vi.fn(async () => ({ body: { ok: true } }));
 			const POST = createRestMutation({
-				route: "token2api:chat",
+				route: "vane:chat",
 				credential: async () => "key:1",
 				input: z.object({}),
 				handler,
 			});
 			const response = await POST(credentialRequest());
 			expect(response.status).toBe(200);
-			expect(mocks.limitCredential).toHaveBeenCalledWith(
-				"token2api:chat",
-				"key:1",
-			);
+			expect(mocks.limitCredential).toHaveBeenCalledWith("vane:chat", "key:1");
 			expect(mocks.limitRequest).not.toHaveBeenCalled();
 		});
 
@@ -549,7 +546,7 @@ describe("REST endpoint execution", () => {
 			});
 			const handler = vi.fn(async () => ({ body: { ok: true } }));
 			const POST = createRestMutation({
-				route: "token2api:chat",
+				route: "vane:chat",
 				credential: async () => "key:1",
 				input: z.object({}),
 				handler,
@@ -563,7 +560,7 @@ describe("REST endpoint execution", () => {
 				throw new AppError("unauthorized", "API Key 无效或已撤销。", 401);
 			});
 			const POST = createRestMutation({
-				route: "token2api:chat",
+				route: "vane:chat",
 				credential,
 				input: z.object({}),
 				handler: async () => ({ body: { ok: true } }),
@@ -571,7 +568,7 @@ describe("REST endpoint execution", () => {
 			expect((await POST(credentialRequest())).status).toBe(401);
 			expect(mocks.limitRequest).toHaveBeenLastCalledWith(
 				expect.any(Request),
-				"token2api:chat:anonymous",
+				"vane:chat:anonymous",
 			);
 			mocks.limitRequest.mockResolvedValue({
 				limit: 60,
@@ -586,7 +583,7 @@ describe("REST endpoint execution", () => {
 		it("validates the body before authenticating a credential", async () => {
 			const credential = vi.fn(async () => "key:1");
 			const POST = createRestMutation({
-				route: "token2api:chat",
+				route: "vane:chat",
 				credential,
 				input: z.object({ model: z.string() }),
 				handler: async () => ({ body: { ok: true } }),
@@ -595,14 +592,14 @@ describe("REST endpoint execution", () => {
 			expect(credential).not.toHaveBeenCalled();
 			expect(mocks.limitRequest).toHaveBeenCalledWith(
 				expect.any(Request),
-				"token2api:chat:anonymous",
+				"vane:chat:anonymous",
 			);
 		});
 
 		it("keeps anonymous requests on the per-IP quota", async () => {
 			const credential = vi.fn(async () => "key:1");
 			const GET = createRestQuery({
-				route: "token2api:models",
+				route: "vane:models",
 				credential,
 				handler: async () => ({ body: { ok: true } }),
 			});
@@ -610,7 +607,7 @@ describe("REST endpoint execution", () => {
 			expect(credential).not.toHaveBeenCalled();
 			expect(mocks.limitRequest).toHaveBeenCalledWith(
 				expect.any(Request),
-				"token2api:models",
+				"vane:models",
 			);
 		});
 	});

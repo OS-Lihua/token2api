@@ -1,10 +1,10 @@
-name: token2api
+name: vane
 services:
   postgres:
     image: postgres:16
     restart: unless-stopped
     environment:
-      POSTGRES_DB: token2api
+      POSTGRES_DB: vane
       POSTGRES_PASSWORD: local_demo_only
       POSTGRES_USER: postgres
     ports:
@@ -12,7 +12,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d token2api"]
+      test: ["CMD-SHELL", "pg_isready -U postgres -d vane"]
       interval: 10s
       timeout: 5s
       retries: 5

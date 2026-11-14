@@ -11,7 +11,7 @@ import { prepaidAbi } from "~/lib/prepaid-abi";
 import type { getConnectedWallet } from "~/lib/wallet";
 import { prepaidTransactionResponse } from "~/shared/model-routing";
 import { isNativeAsset, toChainAmount } from "~/shared/settlement-asset";
-import type { NetworkInfo, OpenSessionResult } from "~/shared/token2api";
+import type { NetworkInfo, OpenSessionResult } from "~/shared/vane";
 
 /** Thrown when the signed-in identity changed during a wallet flow; callers drop it silently. */
 export class StaleIdentityError extends Error {
