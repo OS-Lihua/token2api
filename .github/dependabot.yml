@@ -10,21 +10,17 @@ updates:
       timezone: Asia/Shanghai
     open-pull-requests-limit: 3
     groups:
-      production-major-dependencies:
-        dependency-type: production
+      minor-and-patch:
         update-types:
-          - major
-      development-major-dependencies:
-        dependency-type: development
-        update-types:
-          - major
+          - minor
+          - patch
     ignore:
-      # Template maintainers only review major version changes. Routine
-      # minor/patch churn is intentionally ignored for version-update PRs.
+      # Major upgrades (zod, wagmi, Prisma, TypeScript, vitest and similar)
+      # need a dedicated migration and verification pass, so they are applied
+      # manually instead of being opened as weekly PRs.
       - dependency-name: "*"
         update-types:
-          - version-update:semver-minor
-          - version-update:semver-patch
+          - version-update:semver-major
 
   - package-ecosystem: github-actions
     directory: /
